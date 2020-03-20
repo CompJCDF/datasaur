@@ -5,8 +5,8 @@
 import React from 'react';
 import './index.css';
 import { triggerMaze } from './mazing.js';
-import { characters, gameTitle, howToPlay, remember, levelOneIntro, l0E0T1, l0E0T3, l0E0T4, reviewOrder, beforeFestival, festivalResults, festivalReport, dragAndDrop, dragAndDropResults, businessLicense, suppliersChoice, goodLuck, furtherDescriptions, ohNoSupplierOutOfStock, takeoutIntro, packaging, discountScheme, cutlery } from './storylines.js';
-import { arraysMatch, hoverHeadTextAppear, hoverHeadTextDisappear, addBorderOnClick, confirmOrder, onDragStart, onDragOver, onDrop, displayNextImage, countdown, playBackgroundBossMusic, playAudio, checkOrderInput, timePassing, animatePeople, selectSupplier, assessEnergySupplier, assessFurnitureSelection, assessFoodSupplierSelection, showDescriptiveTextOnMouseOver, hideDescriptiveTextOnMouseOut, assessPotatoDecision, assessPackagingDecision, updatePopularity, increaseMealPrice, offerDiscount, assessCutleryDecision, hideInstructionsPanel, disableTimePassingButton } from './utils.js';
+import { characters, gameTitle, howToPlay, remember, levelOneIntro, l0E0T1, l0E0T3, l0E0T4, reviewOrder, beforeFestival, festivalResults, festivalReport, dragAndDrop, dragAndDropResults, businessLicense, suppliersChoice, goodLuck, furtherDescriptions, ohNoSupplierOutOfStock, takeoutIntro, packaging, discountScheme, cutlery, moreInfo, maze } from './storylines.js';
+import { arraysMatch, hoverHeadTextAppear, hoverHeadTextDisappear, addBorderOnClick, confirmOrder, onDragStart, onDragOver, onDrop, displayNextImage, countdown, playBackgroundBossMusic, checkOrderInput, timePassing, animatePeople, selectSupplier, assessEnergySupplier, assessFurnitureSelection, assessFoodSupplierSelection, showDescriptiveTextOnMouseOver, hideDescriptiveTextOnMouseOut, assessPotatoDecision, assessPackagingDecision, updatePopularity, increaseMealPrice, offerDiscount, assessCutleryDecision, hideInstructionsPanel, disableTimePassingButton, muteAudio, hideMoreInfo, displayMoreInfo } from './utils.js';
 
 
 export const components = (game, level, episode, tree) => {
@@ -28,6 +28,9 @@ export const components = (game, level, episode, tree) => {
 							<img id="tree-side" src={require('./images/just-tree-side.png')} />
 							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
 
+							<img id="mute-audio-icon" src={ game.audioIconSource } onClick={() => { muteAudio(game) } } />
+							
+							<img id="arrow-image" src={require('./images/arrow.png')} />
 
 							<div class="flex-container gameplay-button-container">
 								<button id="opening-play-button" class="update-tree-button button-text" onClick={() => { game.updateTreeBranch(1)} }> Play!</button>
@@ -49,11 +52,13 @@ export const components = (game, level, episode, tree) => {
 							<p id="pick-a-biz-desc" class="plain-text align-center"> <span class="bold"> {howToPlay.instructionsOne} </span> </p>
 							<p id="to-win-desc" class="plain-text align-center"> {howToPlay.instructionsThree} </p>
 
+							<img id="mute-audio-icon" src={ game.audioIconSource } onClick={() => { muteAudio(game) } } />
+
 							<div class="icon-container pound-coin-icon-container">
 								<img class="pound-coin-icon-image" src={require('./images/pound-coin.png')} />
 								<p class="icon-explainer-text"> Money </p>
 							</div>
-							<div class="icon-container leaf-icon-container">
+							<div class="icon-container opening-leaf-icon-container">
 								<img class="leaf-icon-image" src={require('./images/leaf.png')}/>
 								<p class="icon-explainer-text"> Sustainability Points  </p>
 							</div>
@@ -82,11 +87,13 @@ export const components = (game, level, episode, tree) => {
 							<h1 id="choose-a-character-title" class="title align-center"> Choose a Business Owner </h1>
 							<img id="tree-side" src={require('./images/just-tree-side.png')} />
 							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
+
+							<img id="mute-audio-icon" src={ game.audioIconSource } onClick={() => { muteAudio(game) } } />
 							
 							<div class="character-container">
 								<div onClick={() => { addBorderOnClick(".character-one-container") ; game.enableButton("#set-character-button")}} class="character-one-container">
 									<p class="character-name plain-text bold"> {characters[0].name} </p>
-									<img id="joe-head" class="character-head" onMouseOver={() => hoverHeadTextAppear("#joe-description")} onMouseOut={() => hoverHeadTextDisappear("#joe-description")} src={require('./images/joe-head.png')}/>
+									<img id="joe-head" class="character-head" onMouseOver={() => hoverHeadTextAppear("#joe-description")} onMouseOut={() => hoverHeadTextDisappear("#joe-description")} src={require('./images/chef-head.png')}/>
 								</div>
 								<div class="character-description-container">
 										<p id="joe-description" class="character-description"> {characters[0].description} </p>
@@ -98,7 +105,7 @@ export const components = (game, level, episode, tree) => {
 					
 							<div class="flex-container gameplay-button-container">
 
-								<button id="set-character-button" class="update-tree-button button-text" disabled={ game.buttonDisabled } onClick={() => { game.updateTreeBranch(3) }  }> Set </button>
+								<button id="set-character-button" class="update-tree-button button-text" disabled={ game.buttonDisabled }  onClick={() => { game.updateLevel(1) ; game.updateEpisode(0) ;  game.updateTreeBranch(0)  }  }> Set </button>
 							</div>
 							<div class="flex-container bottom">
 								<img id="town-houses" src={require('./images/town-houses.png')} />
@@ -111,28 +118,6 @@ export const components = (game, level, episode, tree) => {
 
 					),
 
-				},
-				3: {
-					id: "L0E0T5",
-					main: (
-						<div class="plain-background title-screen grid-container-4x6">
-							<h1 id="remember-title" class="title align-center"> {remember.title} </h1>
-							<p id="remember-description-one" class="plain-text"> {remember.descriptionOne}</p>
-							<p id="uplands-quote"> {remember.uplandsQuote} <span id="uplands-span"> <br/> {remember.uplandsSpan} </span> </p>
-							<img id="tree-side" src={require('./images/just-tree-side.png')} />
-							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
-
-
-								<div class="flex-container gameplay-button-container">
-									<button class="update-tree-button button-text" onClick={() => { game.updateLevel(1) ; game.updateEpisode(0) ;  game.updateTreeBranch(0)  }  }> Go! </button>
-								</div>
-								<div class="flex-container bottom">
-									<img id="town-houses" src={require('./images/town-houses.png')} />
-								</div>
-						</div>
-
-
-						),
 				}
 			},
 		},
@@ -145,52 +130,100 @@ export const components = (game, level, episode, tree) => {
 		1: {
 			0: {
 
-				// YOUR BUSINESS LICENSE
+
+				// =====================
+				// MAZE GAME
+				// ======================
+
 				0: {
 					id: "L1E0T0",
 					main: (
-						<div class="level-one-background grid-container-4x6" >
+						<div class="level-one-background grid-container-4x6">
 							<img id="tree-side" src={require('./images/just-tree-side.png')} />
 							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
-							
-							<div class="icon-container pound-coin-icon-container">
+
+							<div class="icon-container maze-pound-coin-icon-container">
 								<img class="pound-coin-icon-image" src={require('./images/pound-coin.png')} />
 								<p class="icon-text"> {game.money} </p>
 							</div>
-							<div class="icon-container leaf-icon-container">
+							<div class="icon-container maze-leaf-icon-container">
 								<img class="leaf-icon-image" src={require('./images/leaf.png')}/>
 								<p class="plain-text icon-text"> {game.sePoints} </p>
 							</div>
 
-							<p id="certified-title"> You're Certified </p>
-							<p id="check-it-out"> {businessLicense.checkItOut} </p>
+							<p id="maze-instructions-one" class=""> {maze.instructionsOne} </p>
+							<p id="maze-instructions-two" class=""> {maze.instructionsTwo} </p>
 
-							<div id="business-license-container">
+							<div id="maze_container">
+								<div id="instructions-panel">
 
-								<p id="biz-license-title">{businessLicense.title}</p>
-								<p id="biz-license-company-number">{businessLicense.companyNumber}</p>
-								<p id="biz-license-registrar">{businessLicense.registrar}</p>
-								<p id="biz-license-company-name">{businessLicense.companyName}</p>
-								<p id="biz-license-is-this-day">{businessLicense.isThisDay}</p>
-								<p id="biz-license-given-at">{businessLicense.givenAt}</p>
+									<p id="maze-instructions-title"> Try to get some funding and find investors. Exit the maze before your steps run out for a financial bonus! </p>
 
+									<p id="maze-instructions-move"> Use the arrow keys to move </p>
+
+									 <button id="trigger-maze-button" class="button-text" onClick={ () => { hideInstructionsPanel() ; triggerMaze(game)} } > Play Maze </button>
+
+								</div>
+								<div id="maze" data-steps="212">
+								<div><div class="wall"></div><div class="door exit"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div></div>
+								  <div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div></div>
+								  <div><div class="wall"></div><div></div><div class="female_contribute1"><dialog open id="female_contribute1">I love your project</dialog></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="nubbin_female_generous1"><dialog open id="nubbin_female_generous1">I want to support your project</dialog></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="nubbin_female_generous"><dialog open id="nubbin_female_generous">I want to support your project</dialog></div><div></div><div class="wall"></div></div>
+								  <div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div></div>
+								  <div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="male_contribute1"><dialog open id="male_contribute1">I love your project</dialog></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div></div>
+								  <div><div class="wall"></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div class="wall"></div></div>
+								  <div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div></div>
+								  <div><div class="wall"></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div></div>
+								  <div><div class="wall"></div><div></div><div class="female_contribute2"><dialog open id="female_contribute2">I love your project</dialog></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="nubbin_male_generous1"><dialog open id="nubbin_male_generous1">I want to support your project</dialog></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div></div>
+								  <div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div></div>
+								  <div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="door"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="door"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div></div>
+								  <div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="door"></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div></div>
+								  <div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div></div>
+								  <div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div class="wall"></div></div>
+								  <div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="female_contribute3"><dialog open id="female_contribute3">I love your project</dialog></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div></div>
+								  <div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div></div>
+								  <div><div class="wall"></div><div class="wall investor_profit_sustainability"><dialog open id="investor_profit_sustainability">I don't buy the idea of putting sustainability over profit</dialog></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall sentinel"><dialog open id= "sentinel">Your business sounds great but ... I am not investing at the moment</dialog></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div></div>
+								  <div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div></div>
+								  <div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div></div>
+								  <div><div class="wall"></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div></div>
+								  <div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="female_contribute4"><dialog open id="female_contribute4">I love your project</dialog></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="male_contribute2"><dialog open id="male_contribute2">I love your project</dialog></div><div></div><div class="wall"></div><div></div><div class="wall bank"><dialog open id="bank">Government funding for environment-friendly business has been concluded. Sorry ...</dialog></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div></div>
+								  <div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div></div>
+								  <div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div></div>
+								  <div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div></div>
+								  <div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div></div>
+								  <div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall
+
+
+
+								  investor_meet_later"><dialog open id="investor_meet_later">Let's meet when your company grows bigger</dialog></div><div></div><div class="solar"><dialog open id="solar">You got government agriculture-related funding to install solar panels! </dialog></div><div></div><div class="wall"></div></div>
+								  <div><div class="wall"></div><div></div><div class="male_contribute3"><dialog open id="male_contribute3">I love your project!</dialog></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div></div>
+								  <div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div></div>
+								  <div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall investor_donnot_understand"><dialog open id="investor_donnot_understand">Sorry, I only offer funding for non-profit organizations</dialog></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="female_contribute"><dialog open id="female_contribute">I believe in your project</dialog></div><div></div><div class="wall"></div><div></div><div class="nubbin_male_generous"><dialog open id="nubbin_male_generous">I want to support your project</dialog></div><div></div><div class="wall"></div></div>
+								  <div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div class="nubbin wall"></div><div></div><div class="wall"></div></div>
+								  <div><div class="wall"></div><div></div><div class="male_contribute"><dialog open id="male_contribute">I love your project!</dialog></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="nubbin wall"></div><div></div><div class="wall"></div></div>
+								  <div><div class="wall"></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div></div>
+								  <div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="door entrance"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div></div>
+								</div>
 							</div>
-							
-							
-								
-							<div class="flex-container gameplay-button-container">
-								<button class="update-tree-button button-text"  onClick={ () => game.updateTreeBranch(1) }> Continue </button>
-							</div>
-							
+
+						    <div id="maze_output">
+							   <div id="maze_score"></div>
+							   <div id="maze_message"></div>
+  						    </div>
+
+
+
+
+
+							<button id="continue-from-maze-button" class="update-tree-button button-text" onClick={ () => { game.updateTreeBranch(1)}  }> Continue </button>
+
+
 						</div>
 					),
 					gamePlay: (
 						<div>
-							
+
 						</div>
 					)
-
-
 
 				},
 
@@ -201,6 +234,8 @@ export const components = (game, level, episode, tree) => {
 						<div class="level-one-background grid-container-4x6" >
 							<img id="tree-side" src={require('./images/just-tree-side.png')} />
 							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
+
+							<img id="mute-audio-icon" src={ game.audioIconSource } onClick={() => { muteAudio(game) } } />
 							
 							<div class="icon-container pound-coin-icon-container">
 								<img class="pound-coin-icon-image" src={require('./images/pound-coin.png')} />
@@ -237,6 +272,8 @@ export const components = (game, level, episode, tree) => {
 						<div class="level-one-background grid-container-4x6" >
 							<img id="tree-side" src={require('./images/just-tree-side.png')} />
 							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
+
+							<img id="mute-audio-icon" src={ game.audioIconSource } onClick={() => { muteAudio(game) } } />
 							
 							<div class="icon-container pound-coin-icon-container">
 								<img class="pound-coin-icon-image" src={require('./images/pound-coin.png')} />
@@ -247,31 +284,38 @@ export const components = (game, level, episode, tree) => {
 								<p class="plain-text icon-text"> {game.sePoints} </p>
 							</div>
 
-							<div class="further-description-container">
-
-								<p id="further-description-cost-title">COST: </p>
-								<p id="further-description-cost-value">£1000</p>
-
-								<p id="further-description-more-info-title">More info: </p>
-								<p id="further-description-more-info-value"> This is some text </p>
-
-							</div>
-
 							<p id="suppliers-choice-description-two">{suppliersChoice.descriptionTwo}</p>
 
 							<div class="supplier-choice-container">
 
 								<p class="supplier-choice-title-main"> {suppliersChoice.energyTitle} </p>
 
+								<img id="help-solar-icon" class="help-icon" src={require('./images/help.png')} onClick={ () => displayMoreInfo(moreInfo.energy.solarPower.title, moreInfo.energy.solarPower.subtitle, moreInfo.energy.solarPower.description)}/>
+								<img id="help-grid-icon" class="help-icon" src={require('./images/help.png')} onClick={ () => displayMoreInfo(moreInfo.energy.grid.title, moreInfo.energy.grid.subtitle, moreInfo.energy.grid.description)} />
+								<img id="help-ethical-icon" class="help-icon" src={require('./images/help.png')} onClick={ () => displayMoreInfo(moreInfo.energy.ethical.title, moreInfo.energy.ethical.subtitle, moreInfo.energy.ethical.description)} />
+
 								<p class="supplier-choice-title-one"> {suppliersChoice.energyOne} </p>
 								<p class="supplier-choice-title-two">{ suppliersChoice.energyTwo} </p>
 								<p class="supplier-choice-title-three"> {suppliersChoice.energyThree} </p>
 
-								<img id="solar-image" src={require('./images/solar.png')} onMouseOver={ () => showDescriptiveTextOnMouseOver() } onMouseOut={ () => hideDescriptiveTextOnMouseOut() } onClick={ () => {selectSupplier("#solar-image", "#pylon-image", "#ethical-energy-supplier-image", game, "energy") ; game.enableEnergySupplierButton() } } />
+								<img id="solar-image" src={require('./images/solar.png')} onClick={ () => {selectSupplier("#solar-image", "#pylon-image", "#ethical-energy-supplier-image", game, "energy") ; game.enableEnergySupplierButton() } } />
 								<img id="pylon-image" src={require('./images/pylon.png')} onClick={ () => { selectSupplier("#pylon-image", "#ethical-energy-supplier-image", "#solar-image", game, "energy") ; game.enableEnergySupplierButton()  } } />
-								<img id="ethical-energy-supplier-image" src={require('./images/solar.png')} onClick={ () => { selectSupplier("#ethical-energy-supplier-image", "#pylon-image", "#solar-image", game, "energy") ; game.enableEnergySupplierButton()  }  } />
+								<img id="ethical-energy-supplier-image" src={require('./images/windfarm.png')} onClick={ () => { selectSupplier("#ethical-energy-supplier-image", "#pylon-image", "#solar-image", game, "energy") ; game.enableEnergySupplierButton()  }  } />
 
 							</div>
+
+
+							<div class="more-info-container">
+
+								<img id="close-window-image" src={require('./images/close-window.png')} onClick={() => { hideMoreInfo() } } />
+
+								<p id="more-info-title"> TITLE </p>
+								<p id="more-info-subtitle"> SUBTITLE: subtitle</p>
+								<p id="more-info-description"> description description description description description description description description description description description description  </p>
+
+							</div>
+
+
 							
 								
 							<div class="flex-container gameplay-button-container">
@@ -293,6 +337,8 @@ export const components = (game, level, episode, tree) => {
 						<div class="level-one-background grid-container-4x6" >
 							<img id="tree-side" src={require('./images/just-tree-side.png')} />
 							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
+
+							<img id="mute-audio-icon" src={ game.audioIconSource } onClick={() => { muteAudio(game) } } />
 							
 							<div class="icon-container pound-coin-icon-container">
 								<img class="pound-coin-icon-image" src={require('./images/pound-coin.png')} />
@@ -305,6 +351,8 @@ export const components = (game, level, episode, tree) => {
 
 							<p id="suppliers-choice-description-two">{suppliersChoice.descriptionTwo}</p>
 
+
+
 							<div class="supplier-choice-container">
 
 								<p class="supplier-choice-title-main"> {suppliersChoice.furnitureTitle} </p>
@@ -313,11 +361,28 @@ export const components = (game, level, episode, tree) => {
 								<p class="supplier-choice-title-two">{ suppliersChoice.furnitureTwo} </p>
 								<p class="supplier-choice-title-three"> {suppliersChoice.furnitureThree} </p>
 
+
+								<img id="help-upcycle-icon" class="help-icon" src={require('./images/help.png')} onClick={ () => displayMoreInfo(moreInfo.furniture.upcycle.title, moreInfo.furniture.upcycle.subtitle, moreInfo.furniture.upcycle.description)} />
+								<img id="help-budget-icon" class="help-icon" src={require('./images/help.png')} onClick={ () => displayMoreInfo(moreInfo.furniture.budget.title, moreInfo.furniture.budget.subtitle, moreInfo.furniture.budget.description)} />
+								<img id="help-luxury-icon" class="help-icon" src={require('./images/help.png')} onClick={ () => displayMoreInfo(moreInfo.furniture.luxury.title, moreInfo.furniture.luxury.subtitle, moreInfo.furniture.luxury.description)} />
+
 								<img id="upcycle-image" src={require('./images/upcycle.png')} onClick={ () => {selectSupplier("#upcycle-image", "#budget-image", "#luxury-image", game, "furniture") ; game.enableFurnitureSelectionButton() } } />
-								<img id="budget-image" src={require('./images/upcycle.png')} onClick={ () => { selectSupplier("#budget-image", "#luxury-image", "#upcycle-image", game, "furniture") ; game.enableFurnitureSelectionButton()  } } />
-								<img id="luxury-image" src={require('./images/upcycle.png')} onClick={ () => { selectSupplier("#luxury-image", "#budget-image", "#upcycle-image", game, "furniture") ; game.enableFurnitureSelectionButton()  }  } />
+								<img id="budget-image" src={require('./images/budget-chair.png')} onClick={ () => { selectSupplier("#budget-image", "#luxury-image", "#upcycle-image", game, "furniture") ; game.enableFurnitureSelectionButton()  } } />
+								<img id="luxury-image" src={require('./images/luxury-chair.png')} onClick={ () => { selectSupplier("#luxury-image", "#budget-image", "#upcycle-image", game, "furniture") ; game.enableFurnitureSelectionButton()  }  } />
 
 							</div>
+
+
+							<div class="more-info-container">
+
+								<img id="close-window-image" src={require('./images/close-window.png')} onClick={() => { hideMoreInfo() } } />
+
+								<p id="more-info-title"> TITLE </p>
+								<p id="more-info-subtitle"> SUBTITLE: subtitle</p>
+								<p id="more-info-description"> description description description description description description description description description description description description  </p>
+
+							</div>
+
 							
 								
 							<div class="flex-container gameplay-button-container">
@@ -341,6 +406,8 @@ export const components = (game, level, episode, tree) => {
 						<div class="level-one-background grid-container-4x6" >
 							<img id="tree-side" src={require('./images/just-tree-side.png')} />
 							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
+
+							<img id="mute-audio-icon" src={ game.audioIconSource } onClick={() => { muteAudio(game) } } />
 							
 							<div class="icon-container pound-coin-icon-container">
 								<img class="pound-coin-icon-image" src={require('./images/pound-coin.png')} />
@@ -362,6 +429,19 @@ export const components = (game, level, episode, tree) => {
 								<p id="food-three-title"> {suppliersChoice.foodThree} </p>
 								<p id="food-four-title"> {suppliersChoice.foodFour} </p>
 								<p id="food-five-title"> {suppliersChoice.foodFive} </p>
+								
+
+								<img id="tomato-choice-image" src={require('./images/tomato.png')}/>
+								<img id="tomato-choice-help-icon" class="help-icon" src={require('./images/help.png')}/>
+
+								<img id="cheese-choice-image" src={require('./images/cheese.png')}/>
+								<img id="cheese-choice-help-icon" class="help-icon" src={require('./images/help.png')}/>
+
+								<img id="pork-choice-help-icon" class="help-icon" src={require('./images/help.png')}/>
+
+								<img id="chicken-choice-help-icon" class="help-icon" src={require('./images/help.png')}/>
+
+								<img id="potatoes-choice-help-icon" class="help-icon" src={require('./images/help.png')}/>
 								
 
 								<p id="food-origin-one"> {suppliersChoice.foodOriginOne} </p>
@@ -412,104 +492,17 @@ export const components = (game, level, episode, tree) => {
 				},
 
 
-				// =====================
-				// MAZE GAME 
-				// ======================
-
-				5: {
-					id: "L1E0T0",
-					main: (
-						<div class="level-one-background grid-container-4x6">
-							<img id="tree-side" src={require('./images/just-tree-side.png')} />
-							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
-							
-							<div class="icon-container maze-pound-coin-icon-container">
-								<img class="pound-coin-icon-image" src={require('./images/pound-coin.png')} />
-								<p class="icon-text"> {game.money} </p>
-							</div>
-							<div class="icon-container maze-leaf-icon-container">
-								<img class="leaf-icon-image" src={require('./images/leaf.png')}/>
-								<p class="plain-text icon-text"> {game.sePoints} </p>
-							</div>
-
-							<div id="maze_container">
-								<div id="instructions-panel">
-
-									<p id="maze-instructions-title"> Try to get some funding and find investors </p>
-
-									<p id="maze-instructions-move"> Use the arrow keys to move! </p>
-
-									 <button id="trigger-maze-button" class="button-text" onClick={ () => { hideInstructionsPanel() ; triggerMaze(game)} } > Play Maze </button>
-
-								</div>
-								<div id="maze" data-steps="212">
-									<div><div class="wall"></div><div class="door exit"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div></div>
-									<div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div></div>
-									<div><div class="wall"></div><div></div><div class="nubbin"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="nubbin"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="nubbin"></div><div></div><div class="wall"></div></div>
-									<div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div></div>
-									<div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="nubbin"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div></div>
-									<div><div class="wall"></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div class="wall"></div></div>
-									<div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div></div>
-									<div><div class="wall"></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div></div>
-									<div><div class="wall"></div><div></div><div class="nubbin"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="nubbin"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div></div>
-									<div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div></div>
-									<div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="door"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="door"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div></div>
-									<div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="door"></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div></div>
-									<div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div></div>
-									<div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div class="wall"></div></div>
-									<div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="nubbin"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div></div>
-									<div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div></div>
-									<div><div class="wall"></div><div class="wall sentinel"></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall sentinel"></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div></div>
-									<div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div></div>
-									<div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div></div>
-									<div><div class="wall"></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div></div>
-									<div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="nubbin"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="nubbin"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div></div>
-									<div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div></div>
-									<div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div></div>
-									<div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div></div>
-									<div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div></div>
-									<div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall sentinel"></div><div class="key"></div><div></div><div></div><div class="wall"></div></div>
-									<div><div class="wall"></div><div></div><div class="nubbin"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div></div>
-									<div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div></div>
-									<div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall sentinel"></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="nubbin"></div><div></div><div class="wall"></div><div></div><div class="nubbin wall"></div><div></div><div class="wall"></div></div>
-									<div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div class="nubbin wall"></div><div></div><div class="wall"></div></div>
-									<div><div class="wall"></div><div></div><div class="nubbin"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div></div><div class="nubbin wall"></div><div></div><div class="wall"></div></div>
-									<div><div class="wall"></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div class="wall"></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div class="wall"></div></div>
-									<div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="door entrance"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div><div class="wall"></div></div>
-								</div>
-							</div>
-
-						    <div id="maze_output">
-							   <div id="maze_score"></div>
-							   <div id="maze_message"></div>
-  						    </div>
-
-
-
-  											
-								
-							<button id="continue-from-maze-button" class="update-tree-button button-text" onClick={ () => { game.updateTreeBranch(6)}  }> Continue </button>
-							
-							
-						</div>
-					),
-					gamePlay: (
-						<div>
-							
-						</div>
-					)
-
-				},
-
 				// GOOD LUCK SCREEN 
 
-				6: {
+				5: {
 
 					id: "L1E0T0",
 					main: (
 						<div class="level-one-background grid-container-4x6" >
 							<img id="tree-side" src={require('./images/just-tree-side.png')} />
 							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
+
+							<img id="mute-audio-icon" src={ game.audioIconSource } onClick={() => { muteAudio(game) } } />
 							
 							<div class="icon-container pound-coin-icon-container">
 								<img class="pound-coin-icon-image" src={require('./images/pound-coin.png')} />
@@ -527,7 +520,7 @@ export const components = (game, level, episode, tree) => {
 							
 								
 							<div class="flex-container gameplay-button-container">
-								<button class="update-tree-button button-text"  onClick={ () => game.updateTreeBranch(7) }> Let's Go </button>
+								<button class="update-tree-button button-text"  onClick={ () => game.updateTreeBranch(6) }> Let's Go </button>
 							</div>
 							
 						</div>
@@ -540,12 +533,14 @@ export const components = (game, level, episode, tree) => {
 
 				},
 				// TIME PASSING SCREEN
-				7:{
+				6:{
 					id: "L1E0T0",
 					main: (
 						<div class="level-one-background grid-container-4x6" >
 							<img id="tree-side" src={require('./images/just-tree-side.png')} />
 							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
+
+							<img id="mute-audio-icon" src={ game.audioIconSource } onClick={() => { muteAudio(game) } } />
 							
 							<div class="icon-container pound-coin-icon-container">
 								<img class="pound-coin-icon-image" src={require('./images/pound-coin.png')} />
@@ -556,11 +551,13 @@ export const components = (game, level, episode, tree) => {
 								<p class="plain-text icon-text"> {game.sePoints} </p>
 							</div>
 
+							<img class="speech-bubble" src="" />
 
 							<p id="weekly-earnings" class="gameplay-text"> </p>
 
 
 							<div id="position-identifier"></div>
+							<div id="position-identifier-top"></div>
 
 							<div class="week-number-container">
 								<p id="weekly-timer" class="gameplay-text"> Week 0 </p>
@@ -569,9 +566,9 @@ export const components = (game, level, episode, tree) => {
 							<img id="planet-pizza-animation" class="planet-pizza" src={require('./images/restaurant.png')} onLoad={ () => {timePassing(game, 1, 6) ; animatePeople()} }/>
 							<img id="person-one" class="person" src={require('./images/person-one.png')} />
 							<img id="person-two" class="person" src={require('./images/person-two.png')} />
-							<img id="person-three" class="person" src={require('./images/person-one.png')} />
-							<img id="person-four" class="person" src={require('./images/person-two.png')} />
-							<img id="person-five" class="person" src={require('./images/person-one.png')} />
+							<img id="person-three" class="person" src={require('./images/person-three.png')} />
+							<img id="person-four" class="person" src={require('./images/person-four.png')} />
+							<img id="person-five" class="person" src={require('./images/person-five.png')} />
 							<img id="person-six"  class="person"src={require('./images/person-two.png')} />
 							<img id="person-seven" class="person" src={require('./images/person-one.png')} />
 							<img id="person-eight" class="person" src={require('./images/person-two.png')} />
@@ -614,6 +611,8 @@ export const components = (game, level, episode, tree) => {
 						<div class="level-one-background grid-container-4x6" >
 							<img id="tree-side" src={require('./images/just-tree-side.png')} />
 							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
+
+							<img id="mute-audio-icon" src={ game.audioIconSource } onClick={() => { muteAudio(game) } } />
 							
 							<div class="icon-container pound-coin-icon-container">
 								<img class="pound-coin-icon-image" src={require('./images/pound-coin.png')} />
@@ -628,7 +627,7 @@ export const components = (game, level, episode, tree) => {
 
 							<p id="potato-flood" class="gameplay-text"> { ohNoSupplierOutOfStock.descriptionOne } </p>
 							
-							
+							<img class="farmhouse-image" src={require('./images/farmhouse.png')} />
 								
 							<div class="flex-container gameplay-button-container">
 								<button class="update-tree-button button-text"  onClick={ () => { game.updateTreeBranch(1) ; disableTimePassingButton(game) } }> Continue </button>
@@ -653,6 +652,8 @@ export const components = (game, level, episode, tree) => {
 						<div class="level-one-background grid-container-4x6" >
 							<img id="tree-side" src={require('./images/just-tree-side.png')} />
 							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
+
+							<img id="mute-audio-icon" src={ game.audioIconSource } onClick={() => { muteAudio(game) } } />
 							
 							<div class="icon-container pound-coin-icon-container">
 								<img class="pound-coin-icon-image" src={require('./images/pound-coin.png')} />
@@ -667,6 +668,8 @@ export const components = (game, level, episode, tree) => {
 							<p id="potato-what-do-you-want" class="gameplay-text"> { ohNoSupplierOutOfStock.descriptionThree } </p>
 							
 							
+							<img class="farmhouse-image" src={require('./images/farmhouse.png')} />
+
 							<div id="potato-choice-container">
 
 								<p id="potato-choice-organic"> { ohNoSupplierOutOfStock.potatoChoiceOne } </p>
@@ -705,6 +708,8 @@ export const components = (game, level, episode, tree) => {
 						<div class="level-one-background grid-container-4x6" >
 							<img id="tree-side" src={require('./images/just-tree-side.png')} />
 							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
+
+							<img id="mute-audio-icon" src={ game.audioIconSource } onClick={() => { muteAudio(game) } } />
 							
 							<div class="icon-container pound-coin-icon-container">
 								<img class="pound-coin-icon-image" src={require('./images/pound-coin.png')} />
@@ -715,6 +720,7 @@ export const components = (game, level, episode, tree) => {
 								<p class="plain-text icon-text"> {game.sePoints} </p>
 							</div>
 
+							<img class="speech-bubble" src="" />
 
 							<p id="weekly-earnings" class="gameplay-text"> </p>
 
@@ -728,10 +734,10 @@ export const components = (game, level, episode, tree) => {
 							<img id="planet-pizza-animation" class="planet-pizza" src={require('./images/restaurant.png')} onLoad={ () => {timePassing(game, 1, 12) ; animatePeople()} }/>
 							<img id="person-one" class="person" src={require('./images/person-one.png')} />
 							<img id="person-two" class="person" src={require('./images/person-two.png')} />
-							<img id="person-three" class="person" src={require('./images/person-one.png')} />
-							<img id="person-four" class="person" src={require('./images/person-two.png')} />
-							<img id="person-five" class="person" src={require('./images/person-one.png')} />
-							<img id="person-six"  class="person"src={require('./images/person-two.png')} />
+							<img id="person-three" class="person" src={require('./images/person-three.png')} />
+							<img id="person-four" class="person" src={require('./images/person-four.png')} />
+							<img id="person-five" class="person" src={require('./images/person-five.png')} />
+							<img id="person-six"  class="person"src={require('./images/person-one.png')} />
 							<img id="person-seven" class="person" src={require('./images/person-one.png')} />
 							<img id="person-eight" class="person" src={require('./images/person-two.png')} />
 							<img id="person-nine" class="person" src={require('./images/person-one.png')} />
@@ -768,6 +774,8 @@ export const components = (game, level, episode, tree) => {
 						<div class="level-one-background grid-container-4x6" >
 							<img id="tree-side" src={require('./images/just-tree-side.png')} />
 							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
+
+							<img id="mute-audio-icon" src={ game.audioIconSource } onClick={() => { muteAudio(game) } } />
 							
 							<div class="icon-container pound-coin-icon-container">
 								<img class="pound-coin-icon-image" src={require('./images/pound-coin.png')} />
@@ -778,6 +786,8 @@ export const components = (game, level, episode, tree) => {
 								<p class="plain-text icon-text"> {game.sePoints} </p>
 							</div>
 
+
+
 							<p id="takeout-intro-requests" class="gameplay-text"> { takeoutIntro.customerRequests } </p>
 
 							<p id="takeout-intro-offer" class="gameplay-text"> { takeoutIntro.offeringTakeouts } </p>
@@ -785,6 +795,9 @@ export const components = (game, level, episode, tree) => {
 							<p id="takeout-intro-success" class="gameplay-text"> { takeoutIntro.strategySuccess } </p>
 							
 							
+							<img class="bike-image" src={require('./images/bike.png')}/>
+
+							<img class="houses-takeout" src={require('./images/town-houses.png')}/>
 								
 							<div class="flex-container gameplay-button-container">
 								<button class="update-tree-button button-text"  onClick={ () => { game.updateTreeBranch(1) ; disableTimePassingButton(game) } }> Work It Out </button>
@@ -803,6 +816,8 @@ export const components = (game, level, episode, tree) => {
 						<div class="level-one-background grid-container-4x6" >
 							<img id="tree-side" src={require('./images/just-tree-side.png')} />
 							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
+
+							<img id="mute-audio-icon" src={ game.audioIconSource } onClick={() => { muteAudio(game) } } />
 							
 							<div class="icon-container pound-coin-icon-container">
 								<img class="pound-coin-icon-image" src={require('./images/pound-coin.png')} />
@@ -816,7 +831,7 @@ export const components = (game, level, episode, tree) => {
 							<p id="packaging-pros-cons" class="gameplay-text"> { packaging.packagingProsCons } </p>
 
 							
-
+							<img class="houses-takeout" src={require('./images/town-houses.png')}/>
 							
 
 							<div id="packaging-choice-container">
@@ -829,6 +844,10 @@ export const components = (game, level, episode, tree) => {
 								<p id="packaging-bio-choice" class="gameplay-text"> { packaging.packagingChoiceTwo } </p>
 								<p id="packaging-compostable-choice" class="gameplay-text"> { packaging.packagingChoiceThree } </p>
 
+								<img id="plastic-choice-help-icon" class="help-icon" src={require('./images/help.png')} onClick={ () => displayMoreInfo(moreInfo.packaging.plastic.title, moreInfo.packaging.plastic.subtitle, moreInfo.packaging.plastic.description)}/>
+								<img id="bio-choice-help-icon" class="help-icon" src={require('./images/help.png')} onClick={ () => displayMoreInfo(moreInfo.packaging.recycling.title, moreInfo.packaging.recycling.subtitle, moreInfo.packaging.recycling.description)}/>
+								<img id="compostable-choice-help-icon" class="help-icon" src={require('./images/help.png')} onClick={ () => displayMoreInfo(moreInfo.packaging.compostable.title, moreInfo.packaging.compostable.subtitle, moreInfo.packaging.compostable.description)}/>
+
 
 								<img id="packaging-plastic-image" src={require('./images/tractor.png')} onClick={ ()=> selectSupplier("#packaging-plastic-image", "#packaging-bio-image", "#packaging-compostable-image", game, "packaging")} />
 								<img id="packaging-bio-image" src={require('./images/tractor.png')} onClick={ ()=> selectSupplier("#packaging-bio-image", "#packaging-plastic-image", "#packaging-compostable-image", game, "packaging")} />
@@ -836,8 +855,18 @@ export const components = (game, level, episode, tree) => {
 
 
 							</div>
+
+							<div class="more-info-container">
+
+								<img id="close-window-image" src={require('./images/close-window.png')} onClick={() => { hideMoreInfo() } } />
+
+								<p id="more-info-title"> TITLE </p>
+								<p id="more-info-subtitle"> SUBTITLE: subtitle</p>
+								<p id="more-info-description"> description description description description description description description description description description description description  </p>
+
+							</div>
 							
-							
+							<img class="bike-image" src={require('./images/bike.png')}/>
 								
 							<div class="flex-container gameplay-button-container">
 								<button class="update-tree-button button-text" disabled={ game.packagingDecisionButtonDisabled } onClick={ () => { game.updateTreeBranch(assessPackagingDecision(game)) } }> Decision Made </button>
@@ -863,6 +892,8 @@ export const components = (game, level, episode, tree) => {
 						<div class="level-one-background grid-container-4x6" >
 							<img id="tree-side" src={require('./images/just-tree-side.png')} />
 							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
+
+							<img id="mute-audio-icon" src={ game.audioIconSource } onClick={() => { muteAudio(game) } } />
 							
 							<div class="icon-container pound-coin-icon-container">
 								<img class="pound-coin-icon-image" src={require('./images/pound-coin.png')} />
@@ -876,11 +907,11 @@ export const components = (game, level, episode, tree) => {
 							<p id="compostable-expensive" > { packaging.compostableExpensive } </p>
 							<p id="compostable-expensive-two" > { packaging.compostableExpensiveTwo } </p>
 							
-							
-								
+							<img class="bike-image" src={require('./images/bike.png')}/>
+							<img class="houses-takeout" src={require('./images/town-houses.png')}/>
 							<div class="flex-container gameplay-button-container">
-								<button class="update-tree-button button-text"  onClick={ () => { game.updateTreeBranch(3) ; increaseMealPrice(game) } } > Yes Absolutely </button>
-								<button class="update-tree-button button-text"  onClick={ () => game.updateTreeBranch(3) }> No ... Too Risky </button>
+								<button class="update-tree-button button-text"  onClick={ () => { game.updateTreeBranch(3) ; increaseMealPrice(game) } } > Yes Please </button>
+								<button class="update-tree-button button-text"  onClick={ () => game.updateTreeBranch(3) }> Too Risky </button>
 							</div>
 							
 						</div>
@@ -902,6 +933,8 @@ export const components = (game, level, episode, tree) => {
 						<div class="level-one-background grid-container-4x6" >
 							<img id="tree-side" src={require('./images/just-tree-side.png')} />
 							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
+
+							<img id="mute-audio-icon" src={ game.audioIconSource } onClick={() => { muteAudio(game) } } />
 							
 							<div class="icon-container pound-coin-icon-container">
 								<img class="pound-coin-icon-image" src={require('./images/pound-coin.png')} />
@@ -915,8 +948,8 @@ export const components = (game, level, episode, tree) => {
 							<p id="positive-packaging-feedback-one" > { packaging.positivePackagingFeedbackOne } </p>
 							<p id="positive-packaging-feedback-two" > { packaging.positivePackagingFeedbackTwo } </p>
 							
-							
-								
+							<img class="bike-image" src={require('./images/bike.png')}/>
+							<img class="houses-takeout" src={require('./images/town-houses.png')}/>
 							<div class="flex-container gameplay-button-container">
 								<button class="update-tree-button button-text"  onClick={ () => { game.updateEpisode(1) ; game.updateTreeBranch(0) }} > Amazing </button>
 							</div>
@@ -939,6 +972,8 @@ export const components = (game, level, episode, tree) => {
 						<div class="level-one-background grid-container-4x6" >
 							<img id="tree-side" src={require('./images/just-tree-side.png')} />
 							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
+
+							<img id="mute-audio-icon" src={ game.audioIconSource } onClick={() => { muteAudio(game) } } />
 							
 							<div class="icon-container pound-coin-icon-container">
 								<img class="pound-coin-icon-image" src={require('./images/pound-coin.png')} />
@@ -952,8 +987,8 @@ export const components = (game, level, episode, tree) => {
 							<p id="plastic-packaging-feedback-one" > { packaging.plasticOne } </p>
 							<p id="plastic-packaging-feedback-two" > { packaging.plasticTwo } </p>
 							
-							
-								
+							<img class="bike-image" src={require('./images/bike.png')}/>
+							<img class="houses-takeout" src={require('./images/town-houses.png')}/>
 							<div class="flex-container gameplay-button-container">
 								<button class="update-tree-button button-text"  onClick={ () => { game.updateEpisode(1) ;  game.updateTreeBranch(0) ;  updatePopularity(game, (game.popularityFactor + 0.2))} }> Okay ... </button>
 								<button class="update-tree-button button-text"  onClick={ () => { game.updateEpisode(1) ; game.updateTreeBranch(0) } }> No Thanks </button>
@@ -982,6 +1017,8 @@ export const components = (game, level, episode, tree) => {
 						<div class="level-one-background grid-container-4x6" >
 							<img id="tree-side" src={require('./images/just-tree-side.png')} />
 							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
+
+							<img id="mute-audio-icon" src={ game.audioIconSource } onClick={() => { muteAudio(game) } } />
 							
 							<div class="icon-container pound-coin-icon-container">
 								<img class="pound-coin-icon-image" src={require('./images/pound-coin.png')} />
@@ -996,8 +1033,8 @@ export const components = (game, level, episode, tree) => {
 							<p id="discount-scheme-decision-two" > { discountScheme.discountTwo } </p>
 							<p id="discount-scheme-decision-three" > { discountScheme.discountThree } </p>
 							
-							
-							
+							<img class="bike-image" src={require('./images/bike.png')}/>
+							<img class="houses-takeout" src={require('./images/town-houses.png')}/>
 								
 							<div class="flex-container gameplay-button-container">
 								<button class="update-tree-button button-text"  onClick={ () => { game.updateTreeBranch(1) ; offerDiscount(game) } }> Yes </button>
@@ -1024,6 +1061,8 @@ export const components = (game, level, episode, tree) => {
 						<div class="level-one-background grid-container-4x6" >
 							<img id="tree-side" src={require('./images/just-tree-side.png')} />
 							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
+
+							<img id="mute-audio-icon" src={ game.audioIconSource } onClick={() => { muteAudio(game) } } />
 							
 							<div class="icon-container pound-coin-icon-container">
 								<img class="pound-coin-icon-image" src={require('./images/pound-coin.png')} />
@@ -1038,8 +1077,8 @@ export const components = (game, level, episode, tree) => {
 							<p id="discount-scheme-last" > { discountScheme.discountLast } </p>
 							
 							
-							
-							
+							<img class="bike-image" src={require('./images/bike.png')}/>
+							<img class="houses-takeout" src={require('./images/town-houses.png')}/>
 								
 							<div class="flex-container gameplay-button-container">
 								<button class="update-tree-button button-text"  onClick={ () => { game.updateEpisode(2) ;  game.updateTreeBranch(0) } }> Continue </button>
@@ -1064,6 +1103,8 @@ export const components = (game, level, episode, tree) => {
 						<div class="level-one-background grid-container-4x6" >
 							<img id="tree-side" src={require('./images/just-tree-side.png')} />
 							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
+
+							<img id="mute-audio-icon" src={ game.audioIconSource } onClick={() => { muteAudio(game) } } />
 							
 							<div class="icon-container pound-coin-icon-container">
 								<img class="pound-coin-icon-image" src={require('./images/pound-coin.png')} />
@@ -1078,8 +1119,8 @@ export const components = (game, level, episode, tree) => {
 							<p id="discount-scheme-last" > { discountScheme.discountLast } </p>
 							
 							
-							
-							
+							<img class="bike-image" src={require('./images/bike.png')}/>
+							<img class="houses-takeout" src={require('./images/town-houses.png')}/>
 								
 							<div class="flex-container gameplay-button-container">
 								<button class="update-tree-button button-text"  onClick={ () => { game.updateEpisode(2) ; game.updateTreeBranch(0) } }> Continue </button>
@@ -1109,6 +1150,8 @@ export const components = (game, level, episode, tree) => {
 						<div class="level-one-background grid-container-4x6" >
 							<img id="tree-side" src={require('./images/just-tree-side.png')} />
 							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
+
+							<img id="mute-audio-icon" src={ game.audioIconSource } onClick={() => { muteAudio(game) } } />
 							
 							<div class="icon-container pound-coin-icon-container">
 								<img class="pound-coin-icon-image" src={require('./images/pound-coin.png')} />
@@ -1124,9 +1167,9 @@ export const components = (game, level, episode, tree) => {
 							<p id="cutlery-intro-three" > { cutlery.cutleryIntroThree } </p>
 							
 							
+							<img class="bike-image" src={require('./images/bike.png')}/>
 							
-							
-								
+							<img class="houses-takeout" src={require('./images/town-houses.png')}/>	
 							<div class="flex-container gameplay-button-container">
 								<button class="update-tree-button button-text"  onClick={ () => { game.updateTreeBranch(1) } }> Hmmm ... </button>
 							</div>
@@ -1152,6 +1195,8 @@ export const components = (game, level, episode, tree) => {
 						<div class="level-one-background grid-container-4x6" >
 							<img id="tree-side" src={require('./images/just-tree-side.png')} />
 							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
+
+							<img id="mute-audio-icon" src={ game.audioIconSource } onClick={() => { muteAudio(game) } } />
 							
 							<div class="icon-container pound-coin-icon-container">
 								<img class="pound-coin-icon-image" src={require('./images/pound-coin.png')} />
@@ -1179,11 +1224,25 @@ export const components = (game, level, episode, tree) => {
 
 								<p id="packaging-hover" class="gameplay-text"> { packaging.packagingHover } </p>
 
+								<img id="plastic-cutlery-choice-help-icon" class="help-icon" src={require('./images/help.png')} onClick={ () => displayMoreInfo(moreInfo.cutlery.plastic.title, moreInfo.cutlery.plastic.subtitle, moreInfo.cutlery.plastic.description)}/>
+								<img id="wooden-cutlery-choice-help-icon" class="help-icon" src={require('./images/help.png')} onClick={ () => displayMoreInfo(moreInfo.cutlery.wooden.title, moreInfo.cutlery.wooden.subtitle, moreInfo.cutlery.wooden.description)}/>
+								<img id="no-cutlery-choice-help-icon" class="help-icon" src={require('./images/help.png')} onClick={ () => displayMoreInfo(moreInfo.cutlery.none.title, moreInfo.cutlery.none.subtitle, moreInfo.cutlery.none.description)}/>
+
+							</div>
+
+							<div class="more-info-container">
+
+								<img id="close-window-image" src={require('./images/close-window.png')} onClick={() => { hideMoreInfo() } } />
+
+								<p id="more-info-title"> TITLE </p>
+								<p id="more-info-subtitle"> SUBTITLE: subtitle</p>
+								<p id="more-info-description"> description description description description description description description description description description description description  </p>
+
 							</div>
 							
 							
-							
-							
+							<img class="bike-image" src={require('./images/bike.png')}/>
+							<img class="houses-takeout" src={require('./images/town-houses.png')}/>
 							
 								
 							<div class="flex-container gameplay-button-container">
@@ -1207,6 +1266,8 @@ export const components = (game, level, episode, tree) => {
 						<div class="level-one-background grid-container-4x6" >
 							<img id="tree-side" src={require('./images/just-tree-side.png')} />
 							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
+
+							<img id="mute-audio-icon" src={ game.audioIconSource } onClick={() => { muteAudio(game) } } />
 							
 							<div class="icon-container pound-coin-icon-container">
 								<img class="pound-coin-icon-image" src={require('./images/pound-coin.png')} />
@@ -1216,7 +1277,8 @@ export const components = (game, level, episode, tree) => {
 								<img class="leaf-icon-image" src={require('./images/leaf.png')}/>
 								<p class="plain-text icon-text"> {game.sePoints} </p>
 							</div>
-
+							<img class="houses-takeout" src={require('./images/town-houses.png')}/>
+							<img class="bike-image" src={require('./images/bike.png')}/>
 							<p id="cutlery-last" > { cutlery.cutleryLast } </p>
 								
 							<div class="flex-container gameplay-button-container">
@@ -1243,6 +1305,8 @@ export const components = (game, level, episode, tree) => {
 						<div class="level-one-background grid-container-4x6" >
 							<img id="tree-side" src={require('./images/just-tree-side.png')} />
 							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
+
+							<img id="mute-audio-icon" src={ game.audioIconSource } onClick={() => { muteAudio(game) } } />
 							
 							<div class="icon-container pound-coin-icon-container">
 								<img class="pound-coin-icon-image" src={require('./images/pound-coin.png')} />
@@ -1256,6 +1320,7 @@ export const components = (game, level, episode, tree) => {
 
 							<p id="weekly-earnings" class="gameplay-text"> </p>
 
+							<img class="speech-bubble" src="" />
 
 							<div id="position-identifier"></div>
 
@@ -1266,9 +1331,9 @@ export const components = (game, level, episode, tree) => {
 							<img id="planet-pizza-animation" class="planet-pizza" src={require('./images/restaurant.png')} onLoad={ () => {timePassing(game, 1, 18) ; animatePeople()} }/>
 							<img id="person-one" src={require('./images/person-one.png')} />
 							<img id="person-two" src={require('./images/person-two.png')} />
-							<img id="person-three" src={require('./images/person-one.png')} />
-							<img id="person-four" src={require('./images/person-two.png')} />
-							<img id="person-five" src={require('./images/person-one.png')} />
+							<img id="person-three" src={require('./images/person-three.png')} />
+							<img id="person-four" src={require('./images/person-four.png')} />
+							<img id="person-five" src={require('./images/person-five.png')} />
 							<img id="person-six" src={require('./images/person-two.png')} />
 							<img id="person-seven" src={require('./images/person-one.png')} />
 							<img id="person-eight" src={require('./images/person-two.png')} />
@@ -1311,6 +1376,9 @@ export const components = (game, level, episode, tree) => {
 							<img id="tree-side" src={require('./images/just-tree-side.png')} />
 							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
 							<img id="bunting" src={require('./images/bunting.png')} />
+
+							<img id="mute-audio-icon" src={ game.audioIconSource } onClick={() => { muteAudio(game) } } />
+
 							<div class="icon-container pound-coin-icon-container">
 								<img class="pound-coin-icon-image" src={require('./images/pound-coin.png')} />
 								<p class="icon-text"> {game.money} </p>
@@ -1342,6 +1410,10 @@ export const components = (game, level, episode, tree) => {
 							<img id="tree-side" src={require('./images/just-tree-side.png')} />
 							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
 							<img id="bunting" src={require('./images/bunting.png')} />
+
+							<img id="mute-audio-icon" src={ game.audioIconSource } onClick={() => { muteAudio(game) } } />
+
+
 							<div class="icon-container pound-coin-icon-container">
 								<img class="pound-coin-icon-image" src={require('./images/pound-coin.png')} />
 								<p class="icon-text"> {game.money} </p>
@@ -1372,6 +1444,10 @@ export const components = (game, level, episode, tree) => {
 							<img id="tree-side" src={require('./images/just-tree-side.png')} />
 							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
 							<img id="bunting" src={require('./images/bunting.png')} />
+
+							<img id="mute-audio-icon" src={ game.audioIconSource } onClick={() => { muteAudio(game) } } />
+
+
 							<div class="icon-container pound-coin-icon-container">
 								<img class="pound-coin-icon-image" src={require('./images/pound-coin.png')} />
 								<p class="icon-text"> {game.money} </p>
@@ -1404,6 +1480,10 @@ export const components = (game, level, episode, tree) => {
 							<img id="tree-side" src={require('./images/just-tree-side.png')} />
 							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
 							<img id="bunting" src={require('./images/bunting.png')} />
+
+							<img id="mute-audio-icon" src={ game.audioIconSource } onClick={() => { muteAudio(game) } } />
+
+
 							<div class="icon-container pound-coin-icon-container">
 								<img class="pound-coin-icon-image" src={require('./images/pound-coin.png')} />
 								<p class="icon-text"> {game.money} </p>
@@ -1435,6 +1515,10 @@ export const components = (game, level, episode, tree) => {
 							<img id="tree-side" src={require('./images/just-tree-side.png')} />
 							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
 							<img id="bunting" src={require('./images/bunting.png')} />
+
+							<img id="mute-audio-icon" src={ game.audioIconSource } onClick={() => { muteAudio(game) } } />
+
+
 							<div class="icon-container pound-coin-icon-container">
 								<img class="pound-coin-icon-image" src={require('./images/pound-coin.png')} />
 								<p class="icon-text"> {game.money} </p>
@@ -1490,6 +1574,10 @@ export const components = (game, level, episode, tree) => {
 							<img id="tree-side" src={require('./images/just-tree-side.png')} />
 							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
 							<img id="bunting" src={require('./images/bunting.png')} />
+
+							<img id="mute-audio-icon" src={ game.audioIconSource } onClick={() => { muteAudio(game) } } />
+
+
 							<div class="icon-container pound-coin-icon-container">
 								<img class="pound-coin-icon-image" src={require('./images/pound-coin.png')} />
 								<p class="icon-text"> {game.money} </p>
@@ -1543,6 +1631,10 @@ export const components = (game, level, episode, tree) => {
 						<div class="level-one-background grid-container-4x6">
 							<img id="tree-side" src={require('./images/just-tree-side.png')} />
 							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
+
+							<img id="mute-audio-icon" src={ game.audioIconSource } onClick={() => { muteAudio(game) } } />
+
+
 							<img id="bunting" src={require('./images/bunting.png')} />
 							<div class="icon-container pound-coin-icon-container">
 								<img class="pound-coin-icon-image" src={require('./images/pound-coin.png')} />
@@ -1574,6 +1666,10 @@ export const components = (game, level, episode, tree) => {
 						<div class="level-one-background grid-container-4x6">
 							<img id="tree-side" src={require('./images/just-tree-side.png')} />
 							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
+
+							<img id="mute-audio-icon" src={ game.audioIconSource } onClick={() => { muteAudio(game) } } />
+
+
 							<img id="bunting" src={require('./images/bunting.png')} />
 							<div class="icon-container pound-coin-icon-container">
 								<img class="pound-coin-icon-image" src={require('./images/pound-coin.png')} />
@@ -1607,6 +1703,10 @@ export const components = (game, level, episode, tree) => {
 						<div class="level-one-background grid-container-4x6">
 							<img id="tree-side" src={require('./images/just-tree-side.png')} />
 							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
+
+							<img id="mute-audio-icon" src={ game.audioIconSource } onClick={() => { muteAudio(game) } } />
+
+
 							<img id="bunting" src={require('./images/bunting.png')} />
 							<div class="icon-container pound-coin-icon-container">
 								<img class="pound-coin-icon-image" src={require('./images/pound-coin.png')} />
@@ -1639,6 +1739,10 @@ export const components = (game, level, episode, tree) => {
 					main: (
 						<div class="level-one-background grid-container-4x6">
 							<img id="tree-side" src={require('./images/just-tree-side.png')} />
+
+							<img id="mute-audio-icon" src={ game.audioIconSource } onClick={() => { muteAudio(game) } } />
+
+
 							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
 							<img id="bunting" src={require('./images/bunting.png')} />
 							<div class="icon-container pound-coin-icon-container">
@@ -1672,6 +1776,10 @@ export const components = (game, level, episode, tree) => {
 						<div class="level-one-background grid-container-4x6">
 							<img id="tree-side" src={require('./images/just-tree-side.png')} />
 							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
+
+							<img id="mute-audio-icon" src={ game.audioIconSource } onClick={() => { muteAudio(game) } } />
+
+
 							<img id="bunting" src={require('./images/bunting.png')} />
 							<div class="icon-container pound-coin-icon-container">
 								<img class="pound-coin-icon-image" src={require('./images/pound-coin.png')} />
@@ -1715,6 +1823,10 @@ export const components = (game, level, episode, tree) => {
 						<div class="level-one-background grid-container-4x6">
 							<img id="tree-side" src={require('./images/just-tree-side.png')} />
 							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
+
+							<img id="mute-audio-icon" src={ game.audioIconSource } onClick={() => { muteAudio(game) } } />
+
+
 							<img id="bunting" src={require('./images/bunting.png')} />
 							<div class="icon-container pound-coin-icon-container">
 								<img class="pound-coin-icon-image" src={require('./images/pound-coin.png')} />
@@ -1746,6 +1858,10 @@ export const components = (game, level, episode, tree) => {
 						<div class="level-one-background grid-container-4x6">
 							<img id="tree-side" src={require('./images/just-tree-side.png')} />
 							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
+
+							<img id="mute-audio-icon" src={ game.audioIconSource } onClick={() => { muteAudio(game) } } />
+
+
 							<img id="bunting" src={require('./images/bunting.png')} />
 							<div class="icon-container pound-coin-icon-container">
 								<img class="pound-coin-icon-image" src={require('./images/pound-coin.png')} />
@@ -1801,6 +1917,10 @@ export const components = (game, level, episode, tree) => {
 						<div class="level-one-background grid-container-4x6">
 							<img id="tree-side" src={require('./images/just-tree-side.png')} />
 							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
+
+							<img id="mute-audio-icon" src={ game.audioIconSource } onClick={() => { muteAudio(game) } } />
+
+
 							<img id="bunting" src={require('./images/bunting.png')} />
 							<div class="icon-container pound-coin-icon-container">
 								<img class="pound-coin-icon-image" src={require('./images/pound-coin.png')} />
@@ -1859,6 +1979,9 @@ export const components = (game, level, episode, tree) => {
 						<div class="level-one-background grid-container-4x6">
 							<img id="tree-side" src={require('./images/just-tree-side.png')} />
 							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
+
+							<img id="mute-audio-icon" src={ game.audioIconSource } onClick={() => { muteAudio(game) } } />
+
 							
 							<div class="icon-container pound-coin-icon-container">
 								<img class="pound-coin-icon-image" src={require('./images/pound-coin.png')} />
@@ -1894,6 +2017,8 @@ export const components = (game, level, episode, tree) => {
 						<div class="level-one-background grid-container-4x6">
 							<img id="tree-side" src={require('./images/just-tree-side.png')} />
 							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
+
+							<img id="mute-audio-icon" src={ game.audioIconSource } onClick={() => { muteAudio(game) } } />
 							
 							<div class="icon-container pound-coin-icon-container">
 								<img class="pound-coin-icon-image" src={require('./images/pound-coin.png')} />
@@ -1977,6 +2102,8 @@ export const components = (game, level, episode, tree) => {
 						<div class="level-one-background grid-container-4x6">
 							<img id="tree-side" src={require('./images/just-tree-side.png')} />
 							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
+
+							<img id="mute-audio-icon" src={ game.audioIconSource } onClick={() => { muteAudio(game) } } />
 							
 							<div class="icon-container pound-coin-icon-container">
 								<img class="pound-coin-icon-image" src={require('./images/pound-coin.png')} />
@@ -2017,6 +2144,8 @@ export const components = (game, level, episode, tree) => {
 						<div class="level-one-background grid-container-4x6">
 							<img id="tree-side" src={require('./images/just-tree-side.png')} />
 							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
+
+							<img id="mute-audio-icon" src={ game.audioIconSource } onClick={() => { muteAudio(game) } } />
 							
 							<div class="icon-container pound-coin-icon-container">
 								<img class="pound-coin-icon-image" src={require('./images/pound-coin.png')} />
@@ -2057,6 +2186,8 @@ export const components = (game, level, episode, tree) => {
 						<div class="level-one-background grid-container-4x6">
 							<img id="tree-side" src={require('./images/just-tree-side.png')} />
 							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
+
+							<img id="mute-audio-icon" src={ game.audioIconSource } onClick={() => { muteAudio(game) } } />
 							
 							<div class="icon-container pound-coin-icon-container">
 								<img class="pound-coin-icon-image" src={require('./images/pound-coin.png')} />
@@ -2100,6 +2231,10 @@ export const components = (game, level, episode, tree) => {
 							<img id="tree-side" src={require('./images/just-tree-side.png')} />
 							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
 							
+
+							<img id="mute-audio-icon" src={ game.audioIconSource } onClick={() => { muteAudio(game) } } />
+
+
 							<div class="icon-container pound-coin-icon-container">
 								<img class="pound-coin-icon-image" src={require('./images/pound-coin.png')} />
 								<p class="icon-text"> {game.money} </p>
@@ -2140,6 +2275,8 @@ export const components = (game, level, episode, tree) => {
 						<div class="level-one-background grid-container-4x6">
 							<img id="tree-side" src={require('./images/just-tree-side.png')} />
 							<img id="tree-side-inverse" src={require('./images/just-tree-inverse-side.png')} />
+
+							<img id="mute-audio-icon" src={ game.audioIconSource } onClick={() => { muteAudio(game) } } />
 							
 							<div class="icon-container pound-coin-icon-container">
 								<img class="pound-coin-icon-image" src={require('./images/pound-coin.png')} />
