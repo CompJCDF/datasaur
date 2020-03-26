@@ -474,7 +474,7 @@ export const assessEnergySupplier = function(game) {
 	if (game.energySupplier === "solar") {
 
 		// Take away cost of solar panels from money 
-		game.moneyUp((game.money - 30000), "down")
+		game.moneyUp((game.money - game.solarCost), "down")
 
 		game.sePointsUp( game.sePoints + 10, "up")
 
@@ -522,6 +522,7 @@ export const assessFurnitureSelection = function(game) {
 
 
 	} else if (game.furnitureSelection === "luxury") {
+		game.sePointsUp( game.sePoints + 4, "up")
 		game.moneyUp((game.money - 25000), "down")
 	}
 }
@@ -536,23 +537,34 @@ const updateFoodSupplierSelection = function(elementSelect, foodType, game) {
 	} else if (elementSelect.includes("spade")) {
 
 		game.suppliers[foodType] = "local";
+		
 
 	} else if (elementSelect.includes("tractor")) {
 
 		game.suppliers[foodType] = "organic";
+	}
 
+
+	// ENABLE SET BUTTON 
+
+	if ((game.suppliers.tomato !== "") && (game.suppliers.cheese !== "") && (game.suppliers.chicken !== "") && (game.suppliers.pork !== "") & (game.suppliers.potato !== "")) {
+		game.enableSetSuppliersButton();
 	}
 
 }
 
 export const assessFoodSupplierSelection = function(game, foodType) {
 
-	console.log(game.suppliers.costs[foodType])
-
-
 	game.weeklyEarnings.costs.supplier.supplierCost += parseInt(game.suppliers.costs[foodType][game.suppliers[foodType]]);
 
 	console.log(parseInt(game.suppliers.costs[foodType][game.suppliers[foodType]]))
+
+
+	if (game.suppliers[foodType] === "local") {
+		game.sePointsUp( game.sePoints + 3, "up")
+	} else if (game.suppliers[foodType] === "organic") {
+		game.sePointsUp( game.sePoints + 2, "up")
+	}
 
 	
 }

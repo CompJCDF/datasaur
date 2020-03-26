@@ -302,7 +302,7 @@ export const moreInfo = {
 			solarPower: {
 				title: "Solar Power",
 				subtitle: "Cost: £30000",
-				description: "This cost is for your installation ... afterwards you don’t have to care about your electricity bill anymore!"
+				description: "You didn't get any sponsorship for solar panels so this is seriously expensive. This cost is for your installation ... afterwards you don’t have to care about your electricity bill anymore!"
 			},
 			grid: {
 				title: "Grid",

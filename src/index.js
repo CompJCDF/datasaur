@@ -9,6 +9,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import { components } from './components.js';
+import { moreInfo } from './storylines.js';
+
+
 
 
 
@@ -166,6 +169,28 @@ class Game extends React.Component {
   }
 
 
+  //=========================
+  // HERO HAS SOLAR - MAZE GAME
+  // ========================
+
+  solarCost = 30000;
+
+  heroHasSolar = false;
+
+  heroCollectedSolar = () => {
+
+    console.log("I exist")
+
+    this.solarCost = 5000;
+
+    this.heroHasSolar = true;
+    moreInfo.energy.solarPower.subtitle = "Cost: £5000";
+    moreInfo.energy.solarPower.description = "You got government sponsorship for solar panels. This cost is for your installation ... afterwards you don’t have to care about your electricity bill anymore!";
+  }
+
+
+
+
 
   // ========================
   // ENERGY SUPPLIER 
@@ -199,6 +224,13 @@ class Game extends React.Component {
   // ========================
   // FOOD SUPPLIERS
   // ========================
+
+  setSuppliersButtonDisabled = true;
+
+  enableSetSuppliersButton = () => {
+    this.setSuppliersButtonDisabled = false;
+    this.update(this.level, this.episode, this.trees);
+  }
 
   suppliers = {
     tomato: "",

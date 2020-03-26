@@ -85,6 +85,7 @@ function Position(x, y) {
       this.maze[this.heroPos].classList.remove("solar");
       this.heroHasSolar = true;
       this.heroScore += 5;
+      game.heroCollectedSolar()
       //this.setMessage("You got government's funding for your solar panels instalation in agriculture-related project");
     };
 
@@ -106,6 +107,7 @@ function Position(x, y) {
       // this.mazeScore.classList.remove("has-key");
       this.maze[this.heroPos].classList.remove("door");
       this.heroScore += 50;
+      game.moneyUp((game.money + 2000), "up");
       this.wins("you finished !!!");
     };
 
