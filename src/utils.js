@@ -935,6 +935,15 @@ export const hideInstructionsPanel = function() {
 
 }
 
+export const showFinishedPanel = function() {
+
+
+	const finishedPanel = document.querySelector('#finished-panel');
+
+	finishedPanel.style.display = "grid";
+
+}
+
 
 
 //==================
@@ -1009,6 +1018,45 @@ export const hideMoreInfo = function() {
 			height: "0vh",
 			opacity: "0",
 		})
+}
+
+
+export const displayMoreInfoIngredients = function(title, costOneInput, costTwoInput, costThreeInput, description) {
+
+
+	const infoTitle = document.querySelector('#more-info-title');
+	const costOne = document.querySelector('#more-info-cost-one');
+	const costTwo = document.querySelector('#more-info-cost-two');
+	const costThree = document.querySelector('#more-info-cost-three');
+	const infoDescription = document.querySelector('#more-info-description-ingredients');
+
+
+	infoTitle.innerHTML = title;
+	costOne.innerHTML = costOneInput;
+	costTwo.innerHTML = costTwoInput;
+	costThree.innerHTML = costThreeInput;
+	infoDescription.innerHTML = description;
+
+
+	// Select container 
+	const container = document.querySelector('.more-info-container');
+
+	var timeline = anime.timeline({autoplay: true});
+
+	timeline
+		.add({
+			targets: container,
+			duration: 100,
+			zIndex: 1500,
+		})
+		.add({
+			targets: container,
+			duration: 1000,
+			height: "40vh",
+			opacity: "0.9",
+		})
+
+		
 }
 
 

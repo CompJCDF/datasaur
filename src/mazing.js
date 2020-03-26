@@ -2,6 +2,7 @@
 // Please acknowledge use of this code by including this header
 
 
+import { showFinishedPanel } from './utils.js';
 
 
 export const triggerMaze = function(game) {
@@ -85,7 +86,7 @@ function Position(x, y) {
       this.maze[this.heroPos].classList.remove("solar");
       this.heroHasSolar = true;
       this.heroScore += 5;
-      game.heroCollectedSolar()
+      game.heroCollectedSolar();
       //this.setMessage("You got government's funding for your solar panels instalation in agriculture-related project");
     };
 
@@ -93,14 +94,17 @@ function Position(x, y) {
       // de-activate control keys
       document.removeEventListener("keydown", this.keyPressHandler, false);
       //this.setMessage(text);
-      this.mazeContainer.classList.add("finished");
+      showFinishedPanel();
+      // this.mazeContainer.classList.add("finished");
     };
 
     Mazing.prototype.wins = function() {
       // de-activate control keys
       document.removeEventListener("keydown", this.keyPressHandler, false);
       //this.setMessage(text);
-      this.mazeContainer.classList.add("won");
+      showFinishedPanel();
+      //this.mazeContainer.classList.add("won");
+
     };
 
     Mazing.prototype.heroWins = function() {
@@ -108,6 +112,7 @@ function Position(x, y) {
       this.maze[this.heroPos].classList.remove("door");
       this.heroScore += 50;
       game.moneyUp((game.money + 2000), "up");
+      showFinishedPanel();
       this.wins("you finished !!!");
     };
 
