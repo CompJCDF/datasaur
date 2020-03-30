@@ -118,7 +118,7 @@ export const timePassing = (game, weekBegin, weekEnd) => {
 
   		// Initiate weekly earnings with element of random 
     	
-    	let weeklyEarnings = calculateWeeklyEarnings(game) + Math.floor(Math.random() * (500 - (-500))) + (-500);
+    	let weeklyEarnings = calculateWeeklyEarnings(game) + Math.floor(Math.random() * (100 - (-100))) + (-100);
 
     	plusEarningsText.innerHTML = "+ " + weeklyEarnings
 
@@ -151,6 +151,180 @@ export const timePassing = (game, weekBegin, weekEnd) => {
 	}, 4000);
 
 
+
+}
+
+
+export const animateFeedback = function(game) {
+
+
+	// DECLARE SOURCE OBJECT
+
+
+	const sourceObject = {
+		thumbsUp: "https://i.ibb.co/Xppgs3B/thumbs-up.png",
+		thumbsDown: "https://i.ibb.co/2MJ4w44/thumbs-down.png",
+		love: "https://i.ibb.co/n88Ym28/heart.png"
+	}
+
+
+	// SELECT PICTURES 
+
+	const feedbackIcons = document.querySelectorAll('.feedback-icon');
+
+	// SET COUNTER AND POPULARITY FACTOR
+	let counter = 0;
+	let popularity = game.popularityFactor;
+
+	// 
+
+	feedbackIcons.forEach(function(element) {
+
+		if (counter < 1) {
+			// Adjust SRC depending on popularity factor 
+			if (counter < popularity) {
+				if (counter > 0.6) {
+					element.src = sourceObject.love;
+				} else {
+					element.src = sourceObject.thumbsUp;
+				}
+				
+			} else if (counter > popularity) {
+				if (counter > 0.8) {
+					element.src = sourceObject.thumbsUp;
+				} else {
+					element.src = sourceObject.thumbsDown;
+				}
+				
+			} else {
+				element.src = sourceObject.thumbsUp;
+			}
+		}
+
+		counter += 0.1;
+		
+	})
+
+
+	// GET POSITIONS
+
+	var positionMarker = document.querySelector("#position-identifier").getBoundingClientRect();
+
+
+	// ANIMATION TIMELINE
+
+	// ==================
+	// TIDY THIS ANIMATION 
+	// ==================
+
+	var timeline = anime.timeline({autoplay: true});
+
+	timeline
+		.add({
+			targets: feedbackIcons[3],
+			duration: 1,
+			opacity: 1,
+			translateY: positionMarker.top,
+			delay: 3000
+		})
+		.add({
+			targets: feedbackIcons[3],
+			duration: 2000,
+			translateY: 0,
+			opacity: 0,
+			delay: 1000,
+		})
+		.add({
+			targets: feedbackIcons[2],
+			duration: 1,
+			opacity: 1,
+			translateY: positionMarker.top,
+		})
+		.add({
+			targets: feedbackIcons[2],
+			duration: 2000,
+			translateY: 0,
+			opacity: 0,
+			delay: 1000,
+		})
+		.add({
+			targets: feedbackIcons[9],
+			duration: 1,
+			opacity: 1,
+			translateY: positionMarker.top,
+		})
+		.add({
+			targets: feedbackIcons[9],
+			duration: 2000,
+			translateY: 0,
+			opacity: 0,
+			delay: 1000,
+		})
+		.add({
+			targets: feedbackIcons[0],
+			duration: 1,
+			opacity: 1,
+			translateY: positionMarker.top,
+		})
+		.add({
+			targets: feedbackIcons[0],
+			duration: 2000,
+			translateY: 0,
+			opacity: 0,
+			delay: 1000,
+		})
+		.add({
+			targets: feedbackIcons[7],
+			duration: 1,
+			opacity: 1,
+			translateY: positionMarker.top,
+		})
+		.add({
+			targets: feedbackIcons[7],
+			duration: 2000,
+			translateY: 0,
+			opacity: 0,
+			delay: 1000,
+		})
+		.add({
+			targets: feedbackIcons[1],
+			duration: 1,
+			opacity: 1,
+			translateY: positionMarker.top,
+		})
+		.add({
+			targets: feedbackIcons[1],
+			duration: 2000,
+			translateY: 0,
+			opacity: 0,
+			delay: 1000,
+		})
+		.add({
+			targets: feedbackIcons[4],
+			duration: 1,
+			opacity: 1,
+			translateY: positionMarker.top,
+		})
+		.add({
+			targets: feedbackIcons[4],
+			duration: 2000,
+			translateY: 0,
+			opacity: 0,
+			delay: 1000,
+		})
+		.add({
+			targets: feedbackIcons[5],
+			duration: 1,
+			opacity: 1,
+			translateY: positionMarker.top,
+		})
+		.add({
+			targets: feedbackIcons[5],
+			duration: 2000,
+			translateY: 0,
+			opacity: 0,
+			delay: 1000,
+		})
 
 }
 
@@ -304,6 +478,9 @@ export const onDragOver = function(event) {
 }
 
 export const onDrop = function(event, game) {
+
+event.preventDefault();
+
 const id = event
 	.dataTransfer
 	.getData('text');
@@ -1065,7 +1242,7 @@ export const displayMoreInfoIngredients = function(title, costOneInput, costTwoI
 //==================
 
 
-const speechSourceArray = ["https://images.pexels.com/photos/3966342/pexels-photo-3966342.png?auto=compress&cs=tinysrgb&dpr=1&w=500", "https://images.pexels.com/photos/3966342/pexels-photo-3966342.png?auto=compress&cs=tinysrgb&dpr=1&w=500", "https://images.pexels.com/photos/3972080/pexels-photo-3972080.png?auto=compress&cs=tinysrgb&dpr=1&w=500", "https://images.pexels.com/photos/3972080/pexels-photo-3972080.png?auto=compress&cs=tinysrgb&dpr=1&w=500", "https://images.pexels.com/photos/3972083/pexels-photo-3972083.png?auto=compress&cs=tinysrgb&dpr=1&w=500", "https://images.pexels.com/photos/3972083/pexels-photo-3972083.png?auto=compress&cs=tinysrgb&dpr=1&w=500", "https://images.pexels.com/photos/3972085/pexels-photo-3972085.png?auto=compress&cs=tinysrgb&dpr=1&w=500", "https://images.pexels.com/photos/3972085/pexels-photo-3972085.png?auto=compress&cs=tinysrgb&dpr=1&w=500", "https://images.pexels.com/photos/3966342/pexels-photo-3966342.png?auto=compress&cs=tinysrgb&dpr=1&w=500", "https://images.pexels.com/photos/3966342/pexels-photo-3966342.png?auto=compress&cs=tinysrgb&dpr=1&w=500", "https://images.pexels.com/photos/3966342/pexels-photo-3966342.png?auto=compress&cs=tinysrgb&dpr=1&w=500"];
+const speechSourceArray = ["https://images.pexels.com/photos/4034472/pexels-photo-4034472.png?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260", "https://images.pexels.com/photos/4034472/pexels-photo-4034472.png?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260", "https://images.pexels.com/photos/4034492/pexels-photo-4034492.png?auto=compress&cs=tinysrgb&dpr=1&w=500", "https://images.pexels.com/photos/4034492/pexels-photo-4034492.png?auto=compress&cs=tinysrgb&dpr=1&w=500", "https://images.pexels.com/photos/4034516/pexels-photo-4034516.png?auto=compress&cs=tinysrgb&dpr=1&w=500", "https://images.pexels.com/photos/4034516/pexels-photo-4034516.png?auto=compress&cs=tinysrgb&dpr=1&w=500", "https://images.pexels.com/photos/4034893/pexels-photo-4034893.png?auto=compress&cs=tinysrgb&dpr=1&w=500", "https://images.pexels.com/photos/4034893/pexels-photo-4034893.png?auto=compress&cs=tinysrgb&dpr=1&w=500", "https://images.pexels.com/photos/4034924/pexels-photo-4034924.png?auto=compress&cs=tinysrgb&dpr=1&w=500", "https://images.pexels.com/photos/4034924/pexels-photo-4034924.png?auto=compress&cs=tinysrgb&dpr=1&w=500", "https://images.pexels.com/photos/4034936/pexels-photo-4034936.png?auto=compress&cs=tinysrgb&dpr=1&w=500", "https://images.pexels.com/photos/4034936/pexels-photo-4034936.png?auto=compress&cs=tinysrgb&dpr=1&w=500", "https://images.pexels.com/photos/4034944/pexels-photo-4034944.png?auto=compress&cs=tinysrgb&dpr=1&w=500", "https://images.pexels.com/photos/4034944/pexels-photo-4034944.png?auto=compress&cs=tinysrgb&dpr=1&w=500", "https://images.pexels.com/photos/4034964/pexels-photo-4034964.png?auto=compress&cs=tinysrgb&dpr=1&w=500", "https://images.pexels.com/photos/4034964/pexels-photo-4034964.png?auto=compress&cs=tinysrgb&dpr=1&w=500", "https://images.pexels.com/photos/4034967/pexels-photo-4034967.png?auto=compress&cs=tinysrgb&dpr=1&w=500", "https://images.pexels.com/photos/4034967/pexels-photo-4034967.png?auto=compress&cs=tinysrgb&dpr=1&w=500", "https://images.pexels.com/photos/4034988/pexels-photo-4034988.png?auto=compress&cs=tinysrgb&dpr=1&w=500", "https://images.pexels.com/photos/4034988/pexels-photo-4034988.png?auto=compress&cs=tinysrgb&dpr=1&w=500", "https://images.pexels.com/photos/4034994/pexels-photo-4034994.png?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260", "https://images.pexels.com/photos/4034994/pexels-photo-4034994.png?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260", "https://images.pexels.com/photos/4035054/pexels-photo-4035054.png?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260", "https://images.pexels.com/photos/4035054/pexels-photo-4035054.png?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"]
 let speechCounter = 0;
 
 const displaySpeechBubble = function() {

@@ -254,7 +254,7 @@ export const packaging = {
 		packagingQuestion: "What takeout packaging do you want to buy?",
 		packagingHover: "Hover over the image for more information. Click to select it!",
 		packagingChoiceOne: "Plastic",
-		packagingChoiceTwo: "Bio-degradable",
+		packagingChoiceTwo: "Recyclable",
 		packagingChoiceThree: "Compostable",
 		compostableExpensive: "This kind of packaging is turning out to be really expensive! You might have to adjust your takeout prices to compensate for this.",
 		compostableExpensiveTwo: "Do you want to add an extra £1.50 to each dish to cover the cost?",

@@ -1215,11 +1215,10 @@ WEEKLY TIMER
 
 
 .speech-bubble {
-	width: 20vw;
-	grid-column: 3/5;
-	grid-row: 2/4;
-	align-self: center;
-	justify-self: center;
+	width: 30vw;
+	position: absolute;
+	left: 3vw;
+	top: 25vh;
 	display: none;
 }
 
@@ -1330,6 +1329,54 @@ WEEKLY TIMER
 	height: 3vh;
 	align-self: flex-end;
 }
+
+
+.feedback-icon {
+	position: absolute;
+	width: 3vw;
+	opacity: 0;
+}
+
+#feedback-icon-one {
+	left: 30vw;
+}
+
+#feedback-icon-two {
+	left: 34vw;
+}
+
+#feedback-icon-three {
+	left: 40vw;
+}
+
+#feedback-icon-four {
+	left: 42vw;
+}
+
+#feedback-icon-five {
+	left: 48vw;
+}
+
+#feedback-icon-six {
+	left: 51vw;
+}
+
+#feedback-icon-seven {
+	left: 56vw;
+}
+
+#feedback-icon-eight {
+	left: 60vw;
+}
+
+#feedback-icon-nine {
+	left: 62vw;
+}
+
+#feedback-icon-ten {
+	left: 65vw;
+}
+
 
 
 
@@ -1587,8 +1634,10 @@ FOOD CHOICES
 	display: grid;
   	grid-template-columns: repeat(8, 1fr);
   	grid-template-rows: repeat(6, 1fr);
-  	z-index: 1000;
+  	z-index: 1000 !important;
   	width: fit-content !important;
+  	height: auto !important;
+  	opacity: 1 !important;
 }
 
 
@@ -1761,6 +1810,14 @@ FOOD CHOICES
 	justify-self: center;
 }
 
+#pork-choice-image {
+	width: 2vw;
+	grid-row: 5;
+	grid-column: 3;
+	justify-self: center;
+	border: none;
+}
+
 #pork-choice-help-icon {
 	grid-row: 5;
 	grid-column: 2;
@@ -1773,10 +1830,26 @@ FOOD CHOICES
 	justify-self: center;
 }
 
+#chicken-choice-image {
+	width: 2vw;
+	grid-row: 6;
+	grid-column: 3;
+	justify-self: center;
+	border: none;
+}
+
 #potatoes-choice-help-icon {
 	grid-row: 7;
 	grid-column: 2;
 	justify-self: center;
+}
+
+#carrot-choice-image {
+	width: 2vw;
+	grid-row: 7;
+	grid-column: 3;
+	justify-self: center;
+	border: none;
 }
 
 /* 
@@ -1914,7 +1987,7 @@ SUPPLIER RUNS OUT OF STOCK ...
 	align-self: center;
 	grid-column: 1/3;
 	justify-self: center;
-	width: 3vw;
+	width: 5vw;
 }
 
 #menu-choice {
@@ -1922,7 +1995,7 @@ SUPPLIER RUNS OUT OF STOCK ...
 	align-self: center;
 	grid-column: 3/5;
 	justify-self: center;
-	width: 3vw;
+	width: 5vw;
 }
 
 #wholesale-choice {
@@ -1930,7 +2003,7 @@ SUPPLIER RUNS OUT OF STOCK ...
 	align-self: center;
 	grid-column: 5/7;
 	justify-self: center;
-	width: 3vw;
+	width: 5vw;
 }
 
 #button-organic {
@@ -2137,29 +2210,37 @@ TAKEOUT BRANCH
 	width: 25vw;
 }
 
+.pizzabox-takeout-image {
+	width: 20vw;
+	grid-column: 4/6;
+	grid-row: 2/4;
+	align-self: center;
+	justify-self:center;
+}
+
 
 
 #takeout-intro-requests {
-	grid-row: 2;
-	align-self: center;
-	grid-column: 2/4;
-	font-size: 1.3em;
+	grid-row: 1;
+	align-self: flex-end;
+	grid-column: 2/7;
+	font-size: 1.8em;
 
 }
 
 #takeout-intro-offer {
-	grid-row: 2/4;
-	align-self: center;
+	grid-row: 2;
+	align-self: flex-end;
 	grid-column: 2/4;
-	font-size: 1.3em;
+	font-size: 1.5em;
 
 }
 
 #takeout-intro-success {
 	grid-row: 3;
-	align-self: center;
+	align-self: flex-start;
 	grid-column: 2/4;
-	font-size: 1.3em;
+	font-size: 1.5em;
 }
 
 
@@ -2227,7 +2308,7 @@ TAKEOUT BRANCH
 	align-self: center;
 	grid-column: 1/3;
 	justify-self: center;
-	width: 4vh;
+	width: 10vh;
 	padding: .5em;
 	cursor: pointer;
 }
@@ -2237,7 +2318,7 @@ TAKEOUT BRANCH
 	align-self: center;
 	grid-column: 3/5;
 	justify-self: center;
-	width: 4vh;
+	width: 10vh;
 	padding: .5em;
 	cursor: pointer;
 }
@@ -2247,7 +2328,7 @@ TAKEOUT BRANCH
 	align-self: center;
 	grid-column: 5/7;
 	justify-self: center;
-	width: 4vh;
+	width: 10vh;
 	padding: .5em;
 	cursor: pointer;
 }
