@@ -4,6 +4,7 @@
 
 import anime from 'animejs/lib/anime.es.js';
 
+
 export const arraysMatch = function (arr1, arr2) {
 
 	// Check if the arrays are the same length

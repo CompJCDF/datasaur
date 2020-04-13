@@ -7,6 +7,7 @@ import './index.css';
 import { triggerMaze } from './mazing.js';
 import { characters, gameTitle, howToPlay, remember, levelOneIntro, l0E0T1, l0E0T3, l0E0T4, reviewOrder, beforeFestival, festivalResults, festivalReport, dragAndDrop, dragAndDropResults, businessLicense, suppliersChoice, goodLuck, furtherDescriptions, ohNoSupplierOutOfStock, takeoutIntro, packaging, discountScheme, cutlery, moreInfo, maze, potatoWholesalePath, potatoRethinkPath, potatoOrganicPath, final } from './storylines.js';
 import { arraysMatch, hoverHeadTextAppear, hoverHeadTextDisappear, addBorderOnClick, confirmOrder, onDragStart, onDragOver, onDrop, displayNextImage, countdown, playBackgroundBossMusic, checkOrderInput, timePassing, animatePeople, selectSupplier, assessEnergySupplier, assessFurnitureSelection, assessFoodSupplierSelection, showDescriptiveTextOnMouseOver, hideDescriptiveTextOnMouseOut, assessPotatoDecision, assessPackagingDecision, updatePopularity, increaseMealPrice, offerDiscount, assessCutleryDecision, hideInstructionsPanel, disableTimePassingButton, muteAudio, hideMoreInfo, displayMoreInfo, decreaseMealPrice, assessTreeFromRethinkPotatoSupplier, assessDeadlinePotatoDecision, adjustSupplierCostOnPotatoDecision, calculateWin, displayMoreInfoIngredients, animateFeedback, mobileDrag, mobileDrop } from './utils.js';
+import { Article } from './article.js';
 
 
 
@@ -53,6 +54,8 @@ export const components = (game, level, episode, tree) => {
 							</div>
 							
 							<img id="town-houses-opening" src={ townHouses } />
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 							
 							
 
@@ -79,7 +82,8 @@ export const components = (game, level, episode, tree) => {
 							</div>
 			
 							<img id="town-houses-opening" src={ townHouses } />
-							
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 
 						</div>
 					),
@@ -122,6 +126,8 @@ export const components = (game, level, episode, tree) => {
 							</div>
 			
 							<img id="town-houses-opening" src={ townHouses } />
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 							
 
 						</div>
@@ -143,7 +149,7 @@ export const components = (game, level, episode, tree) => {
 					
 							<div class="flex-container gameplay-button-container">
 
-								<button id="set-character-button" class="update-tree-button button-text"  onClick={() => { game.updateLevel(1) ; game.updateEpisode(0) ;  game.updateTreeBranch(0)  }  }> Continue </button>
+								<button id="set-character-button" class="update-tree-button button-text"  onClick={() => { game.updateLevel(1) ; game.updateEpisode(0) ;  game.updateTreeBranch(0) }  }> Continue </button>
 							</div>
 							
 							<img id="town-houses-opening" src={require('./images/town-houses.png')} />
@@ -159,6 +165,8 @@ export const components = (game, level, episode, tree) => {
 
 							</div>
 
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 
 
 						</div>
@@ -280,6 +288,7 @@ export const components = (game, level, episode, tree) => {
 								<img class= "joy-icon" id="down-joy" src={require('./images/down-joy.png')} />
 							</div>
 
+							
 
 						</div>
 					)
@@ -314,6 +323,9 @@ export const components = (game, level, episode, tree) => {
 							<div class="flex-container gameplay-button-container">
 								<button class="update-tree-button button-text"  onClick={ () => game.updateTreeBranch(2) }> Continue </button>
 							</div>
+
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 							
 						</div>
 					)
@@ -375,6 +387,8 @@ export const components = (game, level, episode, tree) => {
 							<div class="flex-container gameplay-button-container">
 								<button class="update-tree-button button-text" disabled={ game.energySupplierButtonDisabled } onClick={ () => { game.updateTreeBranch(3) ; assessEnergySupplier(game)}  }> Set </button>
 							</div>
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 							
 						</div>
 					)
@@ -437,6 +451,9 @@ export const components = (game, level, episode, tree) => {
 							<div class="flex-container gameplay-button-container">
 								<button class="update-tree-button button-text" disabled={ game.furnitureSelectionButtonDisabled } onClick={ () => { game.updateTreeBranch(4) ; assessFurnitureSelection(game)}  }> Set </button>
 							</div>
+
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 							
 						</div>
 					)
@@ -530,7 +547,7 @@ export const components = (game, level, episode, tree) => {
 
 							</div>
 							
-								
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 							
 							<button class="update-tree-button button-text button-fix" disabled={ game.setSuppliersButtonDisabled } onClick={ () => { game.updateTreeBranch(5) ; assessFoodSupplierSelection(game, "tomato") ; assessFoodSupplierSelection(game, "cheese") ; assessFoodSupplierSelection(game, "pork") ; assessFoodSupplierSelection(game, "chicken") ; assessFoodSupplierSelection(game, "potato")}  }> Set </button>
 							
@@ -567,6 +584,8 @@ export const components = (game, level, episode, tree) => {
 							
 							
 							<button class="update-tree-button button-text button-fix"  onClick={ () => game.updateTreeBranch(6) }> Let's Go </button>
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 							
 						</div>
 					)
@@ -634,6 +653,8 @@ export const components = (game, level, episode, tree) => {
 								<button class="update-tree-button button-text" disabled={ game.timePassingButtonDisabled } onClick={ () => { game.updateLevel(2) ;  game.updateEpisode(0) ;  game.updateTreeBranch(0)  }}> Continue </button>
 							</div>
 							
+							
+
 						</div>
 					)
 
@@ -681,6 +702,8 @@ export const components = (game, level, episode, tree) => {
 							<div class="flex-container gameplay-button-container">
 								<button class="update-tree-button button-text"  onClick={ () => { game.updateTreeBranch(1) ; disableTimePassingButton(game) } }> Continue </button>
 							</div>
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 							
 						</div>
 					)
@@ -734,6 +757,9 @@ export const components = (game, level, episode, tree) => {
 							<div class="flex-container gameplay-button-container">
 								<button class="update-tree-button button-text" disabled={ game.potatoButtonDisabled } onClick={ () => { game.updateTreeBranch(assessPotatoDecision(game)) } }> Run With It </button>
 							</div>
+
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 							
 						</div>
 					)
@@ -776,6 +802,9 @@ export const components = (game, level, episode, tree) => {
 							<div class="flex-container gameplay-button-container">
 								<button class="update-tree-button button-text" onClick={ () => { game.updateTreeBranch(3) }}> Continue </button>
 							</div>
+
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 							
 						</div>
 					)
@@ -816,6 +845,9 @@ export const components = (game, level, episode, tree) => {
 								<button class="update-tree-button button-text" onClick={ () => { game.updateTreeBranch(4) ;  decreaseMealPrice(game) }}> Absolutely </button>
 								<button class="update-tree-button button-text" onClick={ () => { game.updateTreeBranch(5) ; updatePopularity(game, (game.popularityFactor - 0.1))}}> Not Happening </button>
 							</div>
+
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 							
 						</div>
 					)
@@ -853,6 +885,8 @@ export const components = (game, level, episode, tree) => {
 							<div class="flex-container gameplay-button-container">
 								<button class="update-tree-button button-text" onClick={ () => { game.updateTreeBranch(17) ; adjustSupplierCostOnPotatoDecision(game) }}> Phew ...  </button>
 							</div>
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 							
 						</div>
 					)
@@ -890,6 +924,8 @@ export const components = (game, level, episode, tree) => {
 							<div class="flex-container gameplay-button-container">
 								<button class="update-tree-button button-text" onClick={ () => { game.updateTreeBranch(17) ; adjustSupplierCostOnPotatoDecision(game) }}> Let's see ...  </button>
 							</div>
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 							
 						</div>
 					)
@@ -929,6 +965,9 @@ export const components = (game, level, episode, tree) => {
 							<div class="flex-container gameplay-button-container">
 								<button class="update-tree-button button-text" onClick={ () => { game.updateTreeBranch(7) }}> Let's see ...  </button>
 							</div>
+
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 							
 						</div>
 					)
@@ -970,6 +1009,10 @@ export const components = (game, level, episode, tree) => {
 								<button class="update-tree-button button-text" onClick={ () => { game.updateTreeBranch(9) ; updatePopularity(game, (game.popularityFactor - 0.15)) }}> No Way  </button>
 							</div>
 							
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
+
+
 						</div>
 					)
 
@@ -1016,6 +1059,9 @@ export const components = (game, level, episode, tree) => {
 							<div class="flex-container gameplay-button-container">
 								<button class="update-tree-button button-text" disabled={game.potatoChaosButtonDisabled} onClick={ () => { game.updateTreeBranch(assessTreeFromRethinkPotatoSupplier(game)) }}> Go With It  </button>
 							</div>
+
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 							
 						</div>
 					)
@@ -1063,6 +1109,8 @@ export const components = (game, level, episode, tree) => {
 							<div class="flex-container gameplay-button-container">
 								<button class="update-tree-button button-text" onClick={ () => { game.updateTreeBranch(assessTreeFromRethinkPotatoSupplier(game)) }}> Go With It  </button>
 							</div>
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 							
 						</div>
 					)
@@ -1102,6 +1150,9 @@ export const components = (game, level, episode, tree) => {
 								<button class="update-tree-button button-text" onClick={ () => { game.updateTreeBranch(11) ; game.moneyUp((game.money - 200), "down")}}> Sure  </button>
 								<button class="update-tree-button button-text" onClick={ () => { game.updateTreeBranch(12) }}> No Way  </button>
 							</div>
+
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 							
 						</div>
 
@@ -1137,6 +1188,8 @@ export const components = (game, level, episode, tree) => {
 							<div class="flex-container gameplay-button-container">
 								<button class="update-tree-button button-text" onClick={ () => { game.updateTreeBranch(17) ; adjustSupplierCostOnPotatoDecision(game) }}> Continue </button>
 							</div>
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 							
 						</div>
 
@@ -1178,6 +1231,8 @@ export const components = (game, level, episode, tree) => {
 							<div class="flex-container gameplay-button-container">
 								<button class="update-tree-button button-text" onClick={ () => { game.updateTreeBranch(13) }}> Continue </button>
 							</div>
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 							
 						</div>
 
@@ -1214,6 +1269,9 @@ export const components = (game, level, episode, tree) => {
 								<button class="update-tree-button button-text" onClick={ () => { game.updateTreeBranch(14) ; game.moneyUp((game.money - 200), "down")}}> Definately </button>
 								<button class="update-tree-button button-text" onClick={ () => { game.updateTreeBranch(15) ; updatePopularity(game, (game.popularityFactor - 0.1)) }}> Not This Time </button>
 							</div>
+
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 							
 						</div>
 
@@ -1262,6 +1320,8 @@ export const components = (game, level, episode, tree) => {
 							<div class="flex-container gameplay-button-container">
 								<button class="update-tree-button button-text" disabled={game.potatoDeadlineButtonDisabled} onClick={ () => { game.updateTreeBranch(assessDeadlinePotatoDecision(game)) }}> Go With It </button>
 							</div>
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 							
 						</div>
 
@@ -1311,6 +1371,9 @@ export const components = (game, level, episode, tree) => {
 							<div class="flex-container gameplay-button-container">
 								<button class="update-tree-button button-text" disabled={game.potatoDeadlineButtonDisabled} onClick={ () => { game.updateTreeBranch(assessDeadlinePotatoDecision(game)) }}> Go With It </button>
 							</div>
+
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 							
 						</div>
 
@@ -1345,6 +1408,9 @@ export const components = (game, level, episode, tree) => {
 							<div class="flex-container gameplay-button-container">
 								<button class="update-tree-button button-text" onClick={ () => { game.updateTreeBranch(17) ; adjustSupplierCostOnPotatoDecision(game) }}> Sorted </button>
 							</div>
+
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 							
 						</div>
 
@@ -1413,6 +1479,9 @@ export const components = (game, level, episode, tree) => {
 							<div class="flex-container gameplay-button-container">
 								<button class="update-tree-button button-text" disabled={ game.timePassingButtonDisabled } onClick={ () => { game.updateLevel(3) ;  game.updateEpisode(0) ;  game.updateTreeBranch(0)  }}> Continue </button>
 							</div>
+
+
+							
 							
 						</div>
 					)
@@ -1538,11 +1607,8 @@ export const components = (game, level, episode, tree) => {
 							<div class="flex-container gameplay-button-container">
 								<button class="update-tree-button button-text" disabled={ game.packagingDecisionButtonDisabled } onClick={ () => { game.updateTreeBranch(assessPackagingDecision(game)) } }> Decision Made </button>
 							</div>
-							
-						</div>
-					),
-					gamePlay: (
-						<div>
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 							
 						</div>
 					)
@@ -1580,12 +1646,9 @@ export const components = (game, level, episode, tree) => {
 								<button class="update-tree-button button-text"  onClick={ () => { game.updateTreeBranch(3) ; increaseMealPrice(game) } } > Yes Please </button>
 								<button class="update-tree-button button-text"  onClick={ () => game.updateTreeBranch(3) }> Too Risky </button>
 							</div>
-							
-						</div>
-					),
-					gamePlay: (
-						<div>
-							
+								
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
+
 						</div>
 					)
 
@@ -1622,11 +1685,8 @@ export const components = (game, level, episode, tree) => {
 							<div class="flex-container gameplay-button-container">
 								<button class="update-tree-button button-text"  onClick={ () => { game.updateEpisode(1) ; game.updateTreeBranch(0) }} > Amazing </button>
 							</div>
-							
-						</div>
-					),
-					gamePlay: (
-						<div>
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 							
 						</div>
 					)
@@ -1664,11 +1724,8 @@ export const components = (game, level, episode, tree) => {
 								<button class="update-tree-button button-text"  onClick={ () => { game.updateEpisode(1) ;  game.updateTreeBranch(0) ; game.moneyUp((game.money - 200), "down") ; updatePopularity(game, (game.popularityFactor + 0.2))} }> Okay ... </button>
 								<button class="update-tree-button button-text"  onClick={ () => { game.updateEpisode(1) ; game.updateTreeBranch(0) } }> No Thanks </button>
 							</div>
-							
-						</div>
-					),
-					gamePlay: (
-						<div>
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 							
 						</div>
 					)
@@ -1711,11 +1768,8 @@ export const components = (game, level, episode, tree) => {
 								<button class="update-tree-button button-text"  onClick={ () => { game.updateTreeBranch(1) ; offerDiscount(game) } }> Yes </button>
 								<button class="update-tree-button button-text"  onClick={ () => { game.updateTreeBranch(2) } }> Nah </button>
 							</div>
-							
-						</div>
-					),
-					gamePlay: (
-						<div>
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 							
 						</div>
 					)
@@ -1754,11 +1808,8 @@ export const components = (game, level, episode, tree) => {
 							<div class="flex-container gameplay-button-container">
 								<button class="update-tree-button button-text"  onClick={ () => { game.updateEpisode(2) ;  game.updateTreeBranch(0) } }> Continue </button>
 							</div>
-							
-						</div>
-					),
-					gamePlay: (
-						<div>
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 							
 						</div>
 					)
@@ -1796,11 +1847,8 @@ export const components = (game, level, episode, tree) => {
 							<div class="flex-container gameplay-button-container">
 								<button class="update-tree-button button-text"  onClick={ () => { game.updateEpisode(2) ; game.updateTreeBranch(0) } }> Continue </button>
 							</div>
-							
-						</div>
-					),
-					gamePlay: (
-						<div>
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 							
 						</div>
 					)
@@ -1844,11 +1892,8 @@ export const components = (game, level, episode, tree) => {
 							<div class="flex-container gameplay-button-container">
 								<button class="update-tree-button button-text"  onClick={ () => { game.updateTreeBranch(1) } }> Hmmm ... </button>
 							</div>
-							
-						</div>
-					),
-					gamePlay: (
-						<div>
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 							
 						</div>
 					)
@@ -1919,11 +1964,8 @@ export const components = (game, level, episode, tree) => {
 							<div class="flex-container gameplay-button-container">
 								<button class="update-tree-button button-text" disabled={game.cutleryDisabledButton} onClick={ () => { game.updateTreeBranch(assessCutleryDecision(game)) } }> Done </button>
 							</div>
-							
-						</div>
-					),
-					gamePlay: (
-						<div>
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 							
 						</div>
 					)
@@ -1955,11 +1997,8 @@ export const components = (game, level, episode, tree) => {
 							<div class="flex-container gameplay-button-container">
 								<button class="update-tree-button button-text"  onClick={ () => { game.updateTreeBranch(3) } }> Launch </button>
 							</div>
-							
-						</div>
-					),
-					gamePlay: (
-						<div>
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 							
 						</div>
 					)
@@ -2028,11 +2067,8 @@ export const components = (game, level, episode, tree) => {
 							<div class="flex-container gameplay-button-container">
 								<button class="update-tree-button button-text" disabled={ game.timePassingButtonDisabled } onClick={ () => { game.updateLevel(4) ;  game.updateEpisode(0) ;  game.updateTreeBranch(0)  }}> Continue </button>
 							</div>
+
 							
-						</div>
-					),
-					gamePlay: (
-						<div>
 							
 						</div>
 					)
@@ -2088,11 +2124,8 @@ export const components = (game, level, episode, tree) => {
 							<div class="flex-container gameplay-button-container">
 								<button class="update-tree-button button-text" onClick={ () => game.updateTreeBranch(1) }> Great! </button>
 							</div>
+
 							
-						</div>
-					),
-					gamePlay: (
-						<div>
 							
 						</div>
 					)
@@ -2125,11 +2158,8 @@ export const components = (game, level, episode, tree) => {
 							<div class="flex-container gameplay-button-container">
 								<button class="update-tree-button button-text" onClick={ () => game.updateTreeBranch(2) }> Okay! </button>
 							</div>
-							
-						</div>
-					),
-					gamePlay: (
-						<div>
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 							
 						</div>
 					)
@@ -2161,12 +2191,9 @@ export const components = (game, level, episode, tree) => {
 								<button class="update-tree-button button-text" onClick={ () => game.updateTreeBranch(3) }> Close Up </button>
 								<button class="update-tree-button button-text" onClick={ () => {game.updateTreeBranch(11) ; game.moneyUp(game.money + 600, "up") } }> Stay Open </button>
 							</div>
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 						
-						</div>
-					),
-					gamePlay: (
-						<div>
-							
 						</div>
 					)
 
@@ -2196,12 +2223,9 @@ export const components = (game, level, episode, tree) => {
 							<div class="flex-container gameplay-button-container gameplay-button-container-flex">
 								<button class="update-tree-button button-text" onClick={ () => game.updateTreeBranch(4) }> Hmmm ... </button>
 							</div>
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 						
-						</div>
-					),
-					gamePlay: (
-						<div>
-							
 						</div>
 					)
 				},
@@ -2256,6 +2280,8 @@ export const components = (game, level, episode, tree) => {
 								<p id="basil-kg" class="bold"> kg's </p>
 								<p id="l0E0T4-descriptionThree" class="align-center"> {l0E0T4.descriptionThree} </p>
 							</div>
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 						
 						</div>
 					)
@@ -2309,12 +2335,9 @@ export const components = (game, level, episode, tree) => {
 								<button class="update-tree-button button-text" onClick={ () => game.updateTreeBranch(4) }> Edit </button>
 								<button class="update-tree-button button-text" onClick={ () => { game.updateTreeBranch(6) ; game.moneyUp((game.money - ((game.festivalFoodOrder.cheese * 50) + (game.festivalFoodOrder.tomato * 7) + (game.festivalFoodOrder.basil * 50))), "down")} }> Confirm </button>
 							</div>
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 						
-						</div>
-					),
-					gamePlay: (
-						<div>
-							
 						</div>
 					)
 				},
@@ -2344,12 +2367,9 @@ export const components = (game, level, episode, tree) => {
 							<div class="flex-container gameplay-button-container gameplay-button-container-flex">
 								<button class="update-tree-button button-text" onClick={ () => game.updateTreeBranch(game.returnTreeFromFoodOrder()) }> Let's Do This </button>
 							</div>
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 						
-						</div>
-					),
-					gamePlay: (
-						<div>
-							
 						</div>
 					)
 				},
@@ -2381,12 +2401,9 @@ export const components = (game, level, episode, tree) => {
 							<div class="flex-container gameplay-button-container gameplay-button-container-flex">
 								<button class="update-tree-button button-text" onClick={ () => { game.updateTreeBranch(10) ; game.moneyUp((game.money + ((game.festivalFoodOrder.report.profit))), "up")} }> Okay </button>
 							</div>
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 						
-						</div>
-					),
-					gamePlay: (
-						<div>
-							
 						</div>
 					)
 				},
@@ -2418,12 +2435,9 @@ export const components = (game, level, episode, tree) => {
 							<div class="flex-container gameplay-button-container gameplay-button-container-flex">
 								<button class="update-tree-button button-text" onClick={ () => { game.updateTreeBranch(10) ; game.moneyUp((game.money + ((game.festivalFoodOrder.report.profit))), "up")} }> Okay </button>
 							</div>
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 						
-						</div>
-					),
-					gamePlay: (
-						<div>
-							
 						</div>
 					)
 				}, 
@@ -2454,12 +2468,9 @@ export const components = (game, level, episode, tree) => {
 							<div class="flex-container gameplay-button-container gameplay-button-container-flex">
 								<button class="update-tree-button button-text" onClick={ () => { game.updateTreeBranch(10) ; game.moneyUp((game.money + ((game.festivalFoodOrder.report.profit))), "up") } }> Okay </button>
 							</div>
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 						
-						</div>
-					),
-					gamePlay: (
-						<div>
-							
 						</div>
 					)
 				},
@@ -2485,14 +2496,14 @@ export const components = (game, level, episode, tree) => {
 
 							<div class="festival-report-container grid-container-4x6">
 								<p id="festival-report-title" class="">  <span id="festival-report-title-span"> {festivalReport.title} </span>  </p>
-								<p id="festival-report-time" class="gameplay-text"> {festivalReport.time} </p>
-								<p id="festival-report-pizzas" class="gameplay-text"> {festivalReport.pizzas} </p>
-								<p id="festival-report-waste" class="gameplay-text"> {festivalReport.waste} </p>
-								<p id="festival-report-profit" class="gameplay-text"> {festivalReport.profit} </p>
-								<p id="festival-report-time-number" class="gameplay-text align-center"> {game.festivalFoodOrder.report.time} </p>
-								<p id="festival-report-pizzas-number" class="gameplay-text align-center"> {game.festivalFoodOrder.report.pizzas} </p>
-								<p id="festival-report-waste-number" class="gameplay-text align-center"> {game.festivalFoodOrder.report.waste  + " bin bags"} </p>
-								<p id="festival-report-profit-number" class="gameplay-text align-center"> {"£" + game.festivalFoodOrder.report.profit} </p>
+								<p id="festival-report-time"> {festivalReport.time} </p>
+								<p id="festival-report-pizzas" > {festivalReport.pizzas} </p>
+								<p id="festival-report-waste" > {festivalReport.waste} </p>
+								<p id="festival-report-profit"> {festivalReport.profit} </p>
+								<p id="festival-report-time-number"> {game.festivalFoodOrder.report.time} </p>
+								<p id="festival-report-pizzas-number"> {game.festivalFoodOrder.report.pizzas} </p>
+								<p id="festival-report-waste-number" > {game.festivalFoodOrder.report.waste  + " bin bags"} </p>
+								<p id="festival-report-profit-number"> {"£" + game.festivalFoodOrder.report.profit} </p>
 								<p id="get-rid-of-waste"> { festivalReport.getRidOfWaste } </p>
 							</div>
 
@@ -2501,12 +2512,9 @@ export const components = (game, level, episode, tree) => {
 							<div class="flex-container gameplay-button-container gameplay-button-container-flex">
 								<button class="update-tree-button button-text" onClick={ () => { game.updateTreeBranch(0); game.updateEpisode(1) } }> Sure </button>
 							</div>
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 						
-						</div>
-					),
-					gamePlay: (
-						<div>
-							
 						</div>
 					)
 				},
@@ -2537,12 +2545,9 @@ export const components = (game, level, episode, tree) => {
 							<div class="flex-container gameplay-button-container gameplay-button-container-flex">
 								<button class="update-tree-button button-text" onClick={ () => game.updateTreeBranch(12) }> Nice </button>
 							</div>
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 						
-						</div>
-					),
-					gamePlay: (
-						<div>
-							
 						</div>
 					)
 				},
@@ -2597,12 +2602,9 @@ export const components = (game, level, episode, tree) => {
 								<p id="basil-kg" class="bold"> kg's </p>
 								<p id="l0E0T4-descriptionThree" class="align-center"> {l0E0T4.descriptionThree} </p>
 							</div>
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 						
-						</div>
-					),
-					gamePlay: (
-						<div>
-							
 						</div>
 					)
 				},
@@ -2655,12 +2657,9 @@ export const components = (game, level, episode, tree) => {
 								<button class="update-tree-button button-text" onClick={ () => game.updateTreeBranch(12) }> Edit </button>
 								<button class="update-tree-button button-text" onClick={ () => { game.updateTreeBranch(6) ; game.moneyUp((game.money - ((game.festivalFoodOrder.cheese * 50) + (game.festivalFoodOrder.tomato * 7) + (game.festivalFoodOrder.basil * 50))), "down")} }> Confirm </button>
 							</div>
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 						
-						</div>
-					),
-					gamePlay: (
-						<div>
-							
 						</div>
 					)
 				}
@@ -2696,12 +2695,9 @@ export const components = (game, level, episode, tree) => {
 							<div class="flex-container gameplay-button-container gameplay-button-container-flex">
 								<button class="update-tree-button button-text" onClick={ () => game.updateTreeBranch(1) }> Ready </button>
 							</div>
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 						
-						</div>
-					),
-					gamePlay: (
-						<div>
-							
 						</div>
 					)
 				},
@@ -2770,12 +2766,9 @@ export const components = (game, level, episode, tree) => {
 							<div class="flex-container gameplay-button-container gameplay-button-container-flex">
 								<button class="update-tree-button button-text" onClick={ () => game.updateTreeBranch(game.returnTreeFromTrashResult()) }> Finish </button>
 							</div>
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 						
-						</div>
-					),
-					gamePlay: (
-						<div>
-							
 						</div>
 					)
 				},
@@ -2812,12 +2805,9 @@ export const components = (game, level, episode, tree) => {
 							<div class="flex-container gameplay-button-container gameplay-button-container-flex">
 								<button class="update-tree-button button-text" onClick={ () => { game.updateTreeBranch(7) } }> Continue </button>
 							</div>
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 						
-						</div>
-					),
-					gamePlay: (
-						<div>
-							
 						</div>
 					)
 				},
@@ -2854,12 +2844,9 @@ export const components = (game, level, episode, tree) => {
 							<div class="flex-container gameplay-button-container gameplay-button-container-flex">
 								<button class="update-tree-button button-text" onClick={ () => { game.updateTreeBranch(7) }  }> Continue </button>
 							</div>
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 						
-						</div>
-					),
-					gamePlay: (
-						<div>
-							
 						</div>
 					)
 				},
@@ -2898,12 +2885,9 @@ export const components = (game, level, episode, tree) => {
 								<button class="update-tree-button button-text" onClick={ () => {game.updateTreeBranch(6) } }> Bargain </button>
 								<button class="update-tree-button button-text" onClick={ () => { game.updateTreeBranch(7) ; game.moneyUp((game.money - 250), "down")  }  }> Pay & Continue </button>
 							</div>
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 						
-						</div>
-					),
-					gamePlay: (
-						<div>
-							
 						</div>
 					)
 				},
@@ -2943,12 +2927,9 @@ export const components = (game, level, episode, tree) => {
 								<button class="update-tree-button button-text" onClick={ () => {game.updateTreeBranch(6) } }> Bargain </button>
 								<button class="update-tree-button button-text" onClick={ () => { game.updateTreeBranch(7) ;  game.moneyUp((game.money - 500), "down")  } }> Pay & Continue </button>
 							</div>
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 						
-						</div>
-					),
-					gamePlay: (
-						<div>
-							
 						</div>
 					)
 				},
@@ -2978,12 +2959,9 @@ export const components = (game, level, episode, tree) => {
 							<div class="flex-container gameplay-button-container gameplay-button-container-flex">
 								<button class="update-tree-button button-text" onClick={ () => { game.updateTreeBranch(7) ; game.moneyUp((game.money - 1000), "down")} }> Pay & Continue </button>
 							</div>
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 						
-						</div>
-					),
-					gamePlay: (
-						<div>
-							
 						</div>
 					)
 				},
@@ -3016,6 +2994,8 @@ export const components = (game, level, episode, tree) => {
 							<div class="flex-container gameplay-button-container">
 								<button class="update-tree-button button-text"  onClick={ () => game.updateTreeBranch(8) }> Continue </button>
 							</div>
+
+							<button className="read-article-button" onClick={() => game.activateArticle()}>Read Article</button>
 							
 						</div>
 					),
@@ -3080,6 +3060,8 @@ export const components = (game, level, episode, tree) => {
 							<div class="flex-container gameplay-button-container">
 								<button class="update-tree-button button-text" disabled={ game.timePassingButtonDisabled } onClick={ () => { game.updateLevel(5) ;  game.updateEpisode(0) ;  game.updateTreeBranch(calculateWin(game))  }}> Your Score </button>
 							</div>
+
+							
 							
 						</div>
 					),
@@ -3124,7 +3106,7 @@ export const components = (game, level, episode, tree) => {
 							</div>
 								
 							<div class="flex-container gameplay-button-container">
-								<button class="update-tree-button button-text"  onClick={ () => { game.updateTreeBranch(1) } }> Read The Article </button>
+								<button class="update-tree-button button-text"  onClick={ () => { game.activateArticle() } }> Read The Article </button>
 							</div>
 							
 						</div>
@@ -3166,7 +3148,7 @@ export const components = (game, level, episode, tree) => {
 							</div>
 								
 							<div class="flex-container gameplay-button-container">
-								<button class="update-tree-button button-text"  onClick={ () => { game.updateTreeBranch(2) } }> Read The Article </button>
+								<button class="update-tree-button button-text"  onClick={ () => { game.activateArticle() } }> Read The Article </button>
 							</div>
 							
 						</div>
@@ -3210,7 +3192,7 @@ export const components = (game, level, episode, tree) => {
 							</div>
 								
 							<div class="flex-container gameplay-button-container">
-								<button class="update-tree-button button-text"  onClick={ () => { game.updateTreeBranch(3) } }> Read The Article </button>
+								<button class="update-tree-button button-text"  onClick={ () => { game.activateArticle() } }> Read The Article </button>
 							</div>
 							
 						</div>
@@ -3252,7 +3234,7 @@ export const components = (game, level, episode, tree) => {
 							</div>
 								
 							<div class="flex-container gameplay-button-container">
-								<button class="update-tree-button button-text"  onClick={ () => { game.updateTreeBranch(1) } }> Read The Article </button>
+								<button class="update-tree-button button-text"  onClick={ () => { game.activateArticle() } }> Read The Article </button>
 							</div>
 							
 						</div>
@@ -3267,6 +3249,25 @@ export const components = (game, level, episode, tree) => {
 
 			}
 
+		},
+
+
+		6: {
+			0: {
+				0: {
+
+					main: (
+
+						<div id="hello-root">
+							<button id="resume-game-button" onClick={ game.resumeGame }> Resume Game </button>
+							<Article/>
+						</div> 
+
+
+						)
+
+				}
+			}
 		}
 
 	
@@ -3346,7 +3347,20 @@ export const components = (game, level, episode, tree) => {
 			}
 		})
 
+	} else if (level === 6 ) {
+
+		Object.keys(componentsObjects[level]).forEach(function(key){
+
+			if (episode.toString() === key.toString()) {
+
+				result = componentsObjects[level][key][tree]
+				
+			}
+		})
+
 	}
+
+
 
 
 	return result;
