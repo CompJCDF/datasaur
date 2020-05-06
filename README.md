@@ -1,3 +1,24 @@
+=================================================================================================
+
+## NOTES FROM DATASAUR
+
+=================================================================================================
+
+
+## Our project is contained within the src folder of this repository
+
+* Excluding the node modules folder, everything has been included 
+
+
+
+
+=================================================================================================
+
+## REACT NOTES
+
+=================================================================================================
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
