@@ -7,7 +7,7 @@
 * Excluding the node modules folder, everything has been included 
 
 
-This repository contains code for our projects 'The Sustainable Biz Game' created as part of the Digital Investigation module for the MSc Computational and Data Journalism course at Cardiff University.
+This repository contains code for our project 'The Sustainable Biz Game' created as part of the Digital Investigation module for the MSc Computational and Data Journalism course at Cardiff University.
 
 ### Project Outline: 
 
